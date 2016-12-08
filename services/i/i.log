@@ -1,0 +1,14 @@
+2016-12-08 17:09:16,030 :: INFO :: Starting Microservice I
+2016-12-08 17:09:25,176 :: INFO :: Recieved request to find user with ID 2
+2016-12-08 17:09:25,185 :: INFO :: Connection to database SUCCEED
+2016-12-08 17:09:29,720 :: INFO :: Request to databse SUCCEED
+2016-12-08 17:09:29,721 :: INFO :: *** End processing for user with id 2 ***
+2016-12-08 17:09:33,530 :: INFO :: Starting Microservice I
+2016-12-08 17:09:38,799 :: INFO :: Recieved request to find user with ID 1000000
+2016-12-08 17:09:38,808 :: INFO :: Connection to database SUCCEED
+2016-12-08 17:09:38,812 :: INFO :: Request to databse SUCCEED
+2016-12-08 17:09:38,814 :: INFO :: *** End processing for user with id 1000000 ***
+2016-12-08 17:09:50,584 :: INFO :: Recieved request to find user with ID 600
+2016-12-08 17:09:50,590 :: INFO :: Connection to database SUCCEED
+2016-12-08 17:09:50,601 :: INFO :: Request to databse SUCCEED
+2016-12-08 17:09:50,603 :: INFO :: *** End processing for user with id 600 ***
