@@ -33,3 +33,12 @@ class siteConfiguration(object):
 
     def get_site_port(self):
         return self.config.get("app", "port")
+
+    def get_site_i_host(self):
+        return self.config.get("i", "host")
+
+    def get_site_i_port(self):
+        return self.config.get("i", "port")
+
+    def get_site_i_service(self):
+        return self.config.get("i", "service")
