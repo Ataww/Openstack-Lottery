@@ -13,6 +13,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 import config
+import auth
 
 # Initialise Flask
 app = Flask(__name__)
@@ -24,6 +25,7 @@ config.logger = app.logger
 
 @app.route("/image/<id>")
 def get_image(id):
+    auth.getContainers();
     return id;
 
 def configure_logger(logger, logfile):
