@@ -55,7 +55,13 @@ def get_user(id):
     resp = jsonify(data)
     resp.status_code = 200
     config.logger.info("*** End processing for user with id %s ***", id)
+    add_headers(resp)
     return resp
+
+def add_headers(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers',
+                         'Content-Type,Authorization')
 
 def configure_logger(logger, logfile):
     """Configure logger"""
