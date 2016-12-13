@@ -15,7 +15,9 @@ import sys
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import make_response
 import config
+import pymysql
 
 # Initialise Flask
 app = Flask(__name__)
@@ -25,37 +27,62 @@ app.debug = True
 config.logger = app.logger
 
 
-@app.route("/user/<id>", methods=["GET"])
-def api_check(id):
-    """Check the status for user <id>"""
-    config.logger.info("*** Checking user id %s ***", id)
+@app.route("/status/<int:sid>", methods=["GET"])
+def api_check(sid):
+    """
+    Check the status for user <id>
 
-    # Check database if user id exists.
+    :type sid : int
+    """
+    config.logger.info("*** Checking user id %d ***", sid)
+    try:
+        db = db_login()
+        config.logger.info("Connection to database SUCCESSFUL")
+        # Check database if user id exists.
+        cursor = db.cursor()
+        cursor.execute("SELECT NULL FROM player_status WHERE id=%s", sid)
+    except Exception as e:
+        config.logger.critical("Error while querying database : " + e.args[0])
     # Here's where all the magic happen
-    # Add latency on the service to simulate a long process
-    time.sleep(int(config.s.conf_file.get_s_tempo()))
+    data = {}
+    config.logger.info("%d matches for id %d", cursor.rowcount, sid)
+    if cursor.rowcount == 0:
+        data["status"] = "open"
+    else:
+        data["status"] = "played"
 
     # Send the status back
-    data = {"id": id, "status": "played"}
     resp = jsonify(data)
     resp.status_code = 200
-    config.logger.info("*** End checking user id %s ***", id)
+    config.logger.info("*** End checking user id %d ***", sid)
     add_headers(resp)
     return resp
 
 
-@app.route("/user", methods=["PUT"])
-def api_add(id):
-    """Add the user <id> to the played database"""
-    config.logger.info("*** Tagging user id %s as played ***", id)
-    # Insert the user id in database
-    # Here's where all the magic happen
+@app.route("/status/<int:sid>", methods=["PUT"])
+def api_add(sid):
+    """
+    Add the user <id> to the played database
+
+    :type sid : int
+    """
+    config.logger.info("*** Tagging user id %d as played ***", sid)
+
+    try:
+        db = db_login()
+        config.logger.info("Connection to database SUCCESSFUL")
+        # Insert the user id in database
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO player_status VALUES (%s)", sid)
+        # db.commit()
+    except Exception as e:
+        config.logger.critical("Error while updating database : " + e.args[0])
+        pass
 
     # Acknowledge
-    data = {"status": "ok"}
-    resp = jsonify(data)
+    resp = make_response()
     resp.status_code = 200
-    config.logger.info("*** User id %s successfully tagged as played ***", id)
+    config.logger.info("*** User id %d successfully tagged as played ***", sid)
     add_headers(resp)
     return resp
 
@@ -84,6 +111,17 @@ def api_root():
     add_headers(resp)
     return resp
 
+
+def db_login():
+    """Init database connection from configuration"""
+    return pymysql.connect(host=config.s.conf_file.get_db_host(),
+                           port=int(config.s.conf_file.get_db_port()),
+                           user=config.s.conf_file.get_db_username(),
+                           password=config.s.conf_file.get_db_password(),
+                           database=config.s.conf_file.get_db_database(),
+                           autocommit=True)
+
+
 def shutdown_server():
     """shutdown server"""
     func = request.environ.get("werkzeug.server.shutdown")
@@ -99,7 +137,7 @@ def configure_logger(logger, logfile):
     file_handler = RotatingFileHandler(logfile, "a", 1000000, 1)
 
     # Add logger to file
-    if (config.s.conf_file.get_s_debug().title() == 'True'):
+    if config.s.conf_file.get_s_debug().title() == 'True':
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)

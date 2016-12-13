@@ -25,7 +25,7 @@ class S(object):
 class sConfiguration(object):
 
     def __init__(self, configuration_file):
-        self.config = configparser.ConfigParser(allos_no_value=True)
+        self.config = configparser.ConfigParser(allow_no_value=True)
         self.config.read(configuration_file)
 
     def get_s_port(self):
@@ -39,3 +39,18 @@ class sConfiguration(object):
 
     def get_s_debug(self):
         return self.config.get("s", "debug")
+
+    def get_db_host(self):
+        return self.config.get("db", "host")
+
+    def get_db_port(self):
+        return self.config.get("db", "port")
+
+    def get_db_username(self):
+        return self.config.get("db", "username")
+
+    def get_db_password(self):
+        return self.config.get("db", "password")
+
+    def get_db_database(self):
+        return self.config.get("db", "database")
