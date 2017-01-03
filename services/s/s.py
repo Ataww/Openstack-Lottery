@@ -37,7 +37,7 @@ def api_check(sid):
         config.logger.info("Connection to database SUCCESSFUL")
         # Check database if user id exists.
         cursor = db.cursor()
-        cursor.execute("SELECT NULL FROM player_status WHERE id=%s", sid)
+        cursor.execute("SELECT NULL FROM player_status WHERE id= %s", str(sid))
     except Exception as e:
         config.logger.critical("Error while querying database : " + e.args[0])
 
@@ -71,7 +71,7 @@ def api_add(sid):
         config.logger.info("Connection to database SUCCESSFUL")
         # Insert the user id in database
         cursor = db.cursor()
-        cursor.execute("INSERT INTO player_status VALUES (%s)", sid)
+        cursor.execute("INSERT INTO player_status VALUES (%s)", str(sid))
         # db.commit()
     except Exception as e:
         config.logger.critical("Error while updating database : " + e.args[0])
