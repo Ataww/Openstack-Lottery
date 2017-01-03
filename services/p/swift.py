@@ -3,7 +3,7 @@ from keystoneauth1.identity import v3
 from swiftclient.client import Connection
 
 # Create a password auth plugin
-auth = v3.Password(auth_url='https://10.11.50.26:5000/v3',
+auth = v3.Password(auth_url='http://10.11.50.26:5000/v3',
                    username='groupe5',
                    password='QoQJ6Pe2HBs=',
                    user_domain_name='Default',
@@ -17,7 +17,8 @@ session = session.Session(auth=auth, verify=False)
 swift_conn = Connection(insecure=True, session=session)
 
 def getContainers():
-	resp_headers, containers = swift_conn.get_account()
-	print("Response headers: %s" % resp_headers)
-	for container in containers:
-		print(container)
+	resp_headers, container = swift_conn.get_container('Pictures')
+	print(container)
+
+def getImage(id):
+	return swift_conn.get_object('Pictures', id)
