@@ -8,9 +8,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 import pprint
 import os
-import random
-import time
-import subprocess
 import sys
 from flask import Flask
 from flask import jsonify
@@ -43,7 +40,8 @@ def api_check(sid):
         cursor.execute("SELECT NULL FROM player_status WHERE id=%s", sid)
     except Exception as e:
         config.logger.critical("Error while querying database : " + e.args[0])
-    # Here's where all the magic happen
+
+    # fill the payload
     data = {}
     config.logger.info("%d matches for id %d", cursor.rowcount, sid)
     if cursor.rowcount == 0:
