@@ -1,0 +1,10 @@
+heat_template_version: 2015-04-30
+
+description: Databases network template
+
+resources:
+  services_subnet_interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router: "router"
+      subnet: "services_subnet"

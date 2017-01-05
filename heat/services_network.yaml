@@ -1,0 +1,21 @@
+heat_template_version: 2015-04-30
+
+description: Services network template
+
+resources:
+  services_network:
+    type: OS::Neutron::Net
+    properties:
+      name: "services_network"
+      shared: False
+
+  services_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource : services_network }
+      name: "services_subnet"
+      cidr: "10.0.7.0/24"
+      gateway_ip: "10.0.7.254"
+      ip_version: 4
+      allocation_pools: [{"end":"10.0.7.253", "start":"10.0.7.1"}]
+      dns_nameservers: ["10.11.50.1"]

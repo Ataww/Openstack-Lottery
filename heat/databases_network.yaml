@@ -1,0 +1,21 @@
+heat_template_version: 2015-04-30
+
+description: Databases network template
+
+resources:
+  databases_network:
+    type: OS::Neutron::Net
+    properties:
+      name: "databases_network"
+      shared: False
+
+  databases_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource : databases_network }
+      name: "databases_subnet"
+      cidr: "10.0.6.0/24"
+      gateway_ip: "10.0.6.254"
+      ip_version: 4
+      allocation_pools: [{"end":"10.0.6.253", "start":"10.0.6.1"}]
+      dns_nameservers: ["10.11.50.1"]
