@@ -12,6 +12,7 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import Response
 import config
 import swift
 
@@ -25,13 +26,16 @@ config.logger = app.logger
 
 @app.route("/image/<id>")
 def get_image(id):
-    data = {}
-    data["image"] = str(swift.getImage(id))
+    # data = {}
+    # data["image"] = str(swift.getImage(id))
 
-    resp = jsonify(data)
-    resp.status_code = 200
-    add_headers(resp)
-    return resp
+    # resp = jsonify(data)
+    # resp.status_code = 200
+    # add_headers(resp)
+    # return resp
+    data = swift.getImage(id)[1]
+    print(data)
+    return Response(data, mimetype='image/png')
 
 def configure_logger(logger, logfile):
     """Configure logger"""

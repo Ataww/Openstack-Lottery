@@ -21,4 +21,6 @@ def getContainers():
 	print(container)
 
 def getImage(id):
-	return swift_conn.get_object('Pictures', id)
+	picture = swift_conn.get_object('Pictures', id)
+	# print(picture)
+	return picture
