@@ -21,6 +21,12 @@ def getContainers():
 	print(container)
 
 def getImage(id):
-	picture = swift_conn.get_object('Pictures', id)
-	# print(picture)
+	picture = swift_conn.get_object('Pictures', id)[1]
 	return picture
+
+def isImageExist(id):
+	for data in swift_conn.get_container('Pictures')[1]:
+		if data['name'] == id :
+			return True
+
+	return False

@@ -26,16 +26,14 @@ config.logger = app.logger
 
 @app.route("/image/<id>")
 def get_image(id):
-    # data = {}
-    # data["image"] = str(swift.getImage(id))
-
-    # resp = jsonify(data)
-    # resp.status_code = 200
-    # add_headers(resp)
-    # return resp
-    data = swift.getImage(id)[1]
-    print(data)
-    return Response(data, mimetype='image/png')
+    if swift.isImageExist(id) :
+        data = swift.getImage(id)
+    else:
+        data = swift.getImage('unknown.png')
+    
+    response = Response(data, mimetype='image/png')
+    add_headers(response)
+    return response
 
 def configure_logger(logger, logfile):
     """Configure logger"""
