@@ -31,11 +31,15 @@ def index(id):
     host_p = config.site.conf_file.get_site_p_host()
     port_p = config.site.conf_file.get_site_p_port()
     service_p = config.site.conf_file.get_site_p_service()
+    host_s = config.site.conf_file.get_site_s_host()
+    port_s = config.site.conf_file.get_site_s_port()
+    service_s = config.site.conf_file.get_site_s_service()
 
     render_option = {}
     render_option["title"] = config.site.NAME
     render_option["url_i"] = "http://" + host_i + ":" + port_i + "/" + service_i + "/" + str(id)
     render_option["url_p"] = "http://" + host_p + ":" + port_p + "/" + service_p + "/"
+    render_option["url_s"] = "http://" + host_s + ":" + port_s + "/" + service_s + "/" + str(id)
 
     config.logger.info("Launch render on template index.html")
     return render_template('index.html', render_option = render_option)
