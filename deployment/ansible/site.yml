@@ -1,0 +1,10 @@
+---
+# This Playbook would deploy the whole application cluster
+
+- hosts: all
+  roles:
+  - role: common
+
+- hosts: service_i
+  roles:
+  - role: service_i

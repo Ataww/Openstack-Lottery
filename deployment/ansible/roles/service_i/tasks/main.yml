@@ -1,0 +1,11 @@
+---
+# This Playbook runs all the common plays in the deployment
+
+# TEMPLATING
+#- name: Create the hosts file for all machines
+#  template: src=hosts.j2 dest=/etc/hosts
+
+# TO CALL A HANDLER WITH NOTIFY
+#- name: Create the iptables file
+#  template: src=iptables.j2 dest=/etc/sysconfig/iptables
+# notify: restart iptables

@@ -1,0 +1,13 @@
+#The site wide list of mongodb servers
+
+# the mongo servers need a mongod_port variable set, and they must not conflict.
+[all_servers]
+service_i
+service_i
+service_i
+service_i
+service_i
+
+#The list of servers where replication should happen, by default include all servers
+[service_i]
+service_i
