@@ -1,5 +1,7 @@
 [service_i]
 
+[service_b]
+
+[service_p]
+
 [databases]
-10.0.6.11
-10.0.6.10
