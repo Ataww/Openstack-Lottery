@@ -23,7 +23,6 @@ app.debug = True
 # Affect app logger to a global variable so logger can be used elsewhere.
 config.logger = app.logger
 
-
 @app.route("/image/<id>")
 def get_image(id):
     if swift.isImageExist(id) :
@@ -71,6 +70,9 @@ if __name__ == "__main__":
 
     # Initialise apps
     config.initialise_p()
+
+    # Initialize connection with SWIFT
+    swift.createConnection(config)
 
     # Configure Flask logger
     configure_logger(app.logger, app_logfile)
