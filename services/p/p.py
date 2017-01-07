@@ -12,8 +12,9 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import Response
 import config
-import auth
+import swift
 
 # Initialise Flask
 app = Flask(__name__)
@@ -25,8 +26,14 @@ config.logger = app.logger
 
 @app.route("/image/<id>")
 def get_image(id):
-    auth.getContainers();
-    return id;
+    if swift.isImageExist(id) :
+        data = swift.getImage(id)
+    else:
+        data = swift.getImage('unknown.png')
+    
+    response = Response(data, mimetype='image/png')
+    add_headers(response)
+    return response
 
 def configure_logger(logger, logfile):
     """Configure logger"""

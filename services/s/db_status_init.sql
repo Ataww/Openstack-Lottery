@@ -1,7 +1,13 @@
-drop TABLE player_status;
-drop DATABASE db_status;
+DROP DATABASE IF EXISTS db_status;
+DROP USER IF EXISTS 's_user';
 
-create DATABASE db_status;
+CREATE USER 's_user' IDENTIFIED BY 'ThePasswordOfSUser';
+
+CREATE DATABASE db_status;
+USE db_status;
 CREATE TABLE player_status (
-  id INT UNIQUE NOT NULL
+  id INT PRIMARY KEY
 );
+
+
+GRANT SELECT, INSERT ON player_status TO s_user;
