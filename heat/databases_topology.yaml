@@ -3,6 +3,7 @@ heat_template_version: 2015-04-30
 description: Databases topology
 
 resources:
+  #INSTANCE
   identification_instance:
     type: OS::Nova::Server
     properties:
@@ -22,3 +23,28 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "databases_network"
+
+  #VOLUME ATTACHMENT
+  identification_volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      instance_uuid: { get_resource: identification_instance }
+      volume_id: "5baf6f68-ecd8-4f10-be0e-c46cbc66ae8a"
+      mountpoint: "/dev/vdb"
+
+  status_volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      instance_uuid: { get_resource: status_instance }
+      volume_id: "af86f42d-2cf3-477a-8f6a-1e2089e33195"
+      mountpoint: "/dev/vdb"
+
+#OUTPUTS
+outputs:
+  identification_private_ip:
+    description: "Private IP address of the deployed compute instance"
+    value: { get_attr: [identification_instance, first_address] }
+
+  status_private_ip:
+    description: "Private IP address of the deployed compute instance"
+    value: { get_attr: [status_instance, first_address] }
