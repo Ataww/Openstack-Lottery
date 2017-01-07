@@ -1,3 +1,4 @@
 # The global variable file
 database_data_path: /data
-database_volume_device: /dev/sdb
+database_volume_device: /dev/vdb
+repository_openstack: https://github.com/Ataww/Openstack-Lottery.git
