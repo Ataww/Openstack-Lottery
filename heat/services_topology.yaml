@@ -40,8 +40,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "i_service"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
@@ -50,8 +50,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "s_service"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
@@ -60,8 +60,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "b_service"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
@@ -70,8 +70,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "w_service"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
@@ -80,8 +80,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "p_service"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
@@ -90,8 +90,8 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "web_app"
-      image: "cirros"
-      flavor: "m1.tiny"
+      image: "ubuntu1404_v2"
+      flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
