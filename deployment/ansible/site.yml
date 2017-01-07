@@ -8,6 +8,17 @@
 - hosts: service_i
   roles:
   - role: common_services
+  - role: service_i
+
+- hosts: service_b
+  roles:
+  - role: common_services
+  - role: service_b
+
+- hosts: service_p
+  roles:
+  - role: common_services
+  - role: service_p
 
 - hosts: databases
   roles:
