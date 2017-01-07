@@ -1,0 +1,17 @@
+- name: Install python package keystoneauth1
+  pip:
+    name: keystoneauth1
+    executable: pip3
+  become: true
+
+- name: Install python package python-keystoneclient
+  pip:
+    name: python-keystoneclient
+    executable: pip3
+  become: true
+
+- name: Install python package python-swiftclient
+  pip:
+    name: python-swiftclient
+    executable: pip3
+  become: true
