@@ -39,3 +39,21 @@ class pConfiguration(object):
 
     def get_p_debug(self):
         return self.config.get("p", "debug")
+
+    def get_swift_user(self):
+        return self.config.get("swift", "user")
+
+    def get_swift_password(self):
+        return self.config.get("swift", "password")
+
+    def get_swift_auth_url(self):
+        return self.config.get("swift", "auth_url")
+
+    def get_swift_user_domain_name(self):
+        return self.config.get("swift", "user_domain_name")
+
+    def get_swift_project_name(self):
+        return self.config.get("swift", "project_name")
+
+    def get_swift_project_id(self):
+        return self.config.get("swift", "project_id")

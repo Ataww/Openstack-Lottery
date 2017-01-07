@@ -2,30 +2,34 @@ from keystoneauth1 import session
 from keystoneauth1.identity import v3
 from swiftclient.client import Connection
 
-# Create a password auth plugin
-auth = v3.Password(auth_url='http://10.11.50.26:5000/v3',
-                   username='groupe5',
-                   password='QoQJ6Pe2HBs=',
-                   user_domain_name='Default',
-                   project_name='project5',
-                   project_id='140b893638ac48fa8b826587cc8f6487')
+swift = None
 
-# Create session
-session = session.Session(auth=auth, verify=False)
+def createConnection(config):
+	# Create a password auth plugin
+	auth = v3.Password(auth_url=config.p.conf_file.get_swift_auth_url(),
+	                   username=config.p.conf_file.get_swift_user(),
+	                   password=config.p.conf_file.get_swift_password(),
+	                   user_domain_name=config.p.conf_file.get_swift_user_domain_name(),
+	                   project_name=config.p.conf_file.get_swift_project_name(),
+	                   project_id=config.p.conf_file.get_swift_project_id())
 
-# Create swiftclient Connection
-swift_conn = Connection(insecure=True, session=session)
+	# Create session
+	sessionKeystone = session.Session(auth=auth, verify=False)
+
+	# Create swiftclient Connection
+	global swift
+	swift = Connection(insecure=True, session=sessionKeystone)
 
 def getContainers():
-	resp_headers, container = swift_conn.get_container('Pictures')
+	resp_headers, container = swift.get_container('Pictures')
 	print(container)
 
 def getImage(id):
-	picture = swift_conn.get_object('Pictures', id)[1]
+	picture = swift.get_object('Pictures', id)[1]
 	return picture
 
 def isImageExist(id):
-	for data in swift_conn.get_container('Pictures')[1]:
+	for data in swift.get_container('Pictures')[1]:
 		if data['name'] == id :
 			return True
 
