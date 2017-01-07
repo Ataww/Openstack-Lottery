@@ -1,0 +1,13 @@
+heat_template_version: 2015-04-30
+
+description: Objects topology
+
+resources:
+
+  # Swift container
+  i_floating_ip:
+    type: OS::Swift::Container
+    properties:
+      PurgeOnDelete: True
+      name: "Pictures"
+
