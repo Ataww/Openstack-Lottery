@@ -1,0 +1,5 @@
+- name: Install python package pymysl
+  pip:
+    name: pymysql
+    executable: pip3
+  become: true

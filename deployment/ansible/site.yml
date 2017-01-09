@@ -20,6 +20,16 @@
   - role: common_services
   - role: service_p
 
+- hosts: service_s
+  roles:
+  - role: common_services
+  - role: service_s
+
+- hosts: service_w
+  roles:
+  - role: common_services
+  - role: service_w
+
 - hosts: databases
   roles:
   - role: database
