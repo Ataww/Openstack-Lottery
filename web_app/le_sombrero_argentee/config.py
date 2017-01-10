@@ -58,3 +58,11 @@ class siteConfiguration(object):
 
     def get_site_s_service(self):
         return self.config.get("s", "service")
+    def get_site_b_host(self):
+        return self.config.get("b", "host")
+
+    def get_site_b_port(self):
+        return self.config.get("b", "port")
+
+    def get_site_b_service(self):
+        return self.config.get("b", "service")

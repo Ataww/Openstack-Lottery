@@ -39,3 +39,39 @@ class bConfiguration(object):
 
     def get_b_debug(self):
         return self.config.get("b", "debug")
+
+    def get_swift_user(self):
+        return self.config.get("swift", "user")
+
+    def get_swift_password(self):
+        return self.config.get("swift", "password")
+
+    def get_swift_auth_url(self):
+        return self.config.get("swift", "auth_url")
+
+    def get_swift_user_domain_name(self):
+        return self.config.get("swift", "user_domain_name")
+
+    def get_swift_project_name(self):
+        return self.config.get("swift", "project_name")
+
+    def get_swift_project_id(self):
+        return self.config.get("swift", "project_id")
+
+    def get_s_host(self):
+        return self.config.get("s", "host")
+
+    def get_s_port(self):
+        return self.config.get("s", "port")
+
+    def get_s_service(self):
+        return self.config.get("s", "service")
+
+    def get_w_host(self):
+        return self.config.get("w", "host")
+
+    def get_w_port(self):
+        return self.config.get("w", "port")
+
+    def get_w_service(self):
+        return self.config.get("w", "service")

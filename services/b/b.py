@@ -4,21 +4,16 @@
 
 """Service B launch the lotery and send the price to web server"""
 
-import base64
 import logging
 import os
 import pprint
-import random
-import subprocess
 import sys
-import time
 from flask import Flask
 from flask import jsonify
 from flask import request
 import requests
 from logging.handlers import RotatingFileHandler
-import json
-
+import swift
 import config
 
 # Initialise Flask
@@ -34,13 +29,28 @@ def api_play(id):
     """Get the price for user <id>"""
     config.logger.info("*** Start processing id %s ***", id)
 
-    # Call Web service w
-    request_data = requests.get("http://localhost:8090/play/"+id)
+    host_s = config.b.conf_file.get_s_host()
+    port_s = config.b.conf_file.get_s_port()
+    service_s = config.b.conf_file.get_s_service()
+    host_w = config.b.conf_file.get_w_host()
+    port_w = config.b.conf_file.get_w_port()
+    service_w = config.b.conf_file.get_w_service()
 
-    if(request_data.status_code == requests.codes.ok):
-        data = {"price": getValueJson("price",request_data.json()), "img": getValueJson("img",request_data.json())}
+    # Call Web service w
+    request_data = requests.get("http://" + host_w + ":" + port_w + "/" + service_w + "/" + str(id))
+
+    if request_data.status_code == requests.codes.ok:
+        data = {"price": getValueJson("price", request_data.json()), "img": getValueJson("img", request_data.json())}
         resp = jsonify(data)
         resp.status_code = requests.codes.ok
+
+        # Put the image  in swift
+        swift.putImage(id, getValueJson("img", request_data.json()))
+
+        # Call the service s for update the status
+        request_data = requests.put("http://" + host_s + ":" + port_s + "/" + service_s + "/" + str(id))
+        if request_data.status_code == requests.codes.ok:
+            config.logger.error("*** impossible de mettre à jour le status ***", id)
     else:
         resp = jsonify("")
         resp.status_code = request_data.status_code
@@ -49,11 +59,13 @@ def api_play(id):
     add_headers(resp)
     return resp
 
+
 def getValueJson(keyResearch, data):
     for key, value in data.items():
         if keyResearch in key:
             return value
     return ""
+
 
 @app.route("/shutdown", methods=["POST"])
 def shutdown():
@@ -78,6 +90,7 @@ def api_root():
 
     add_headers(resp)
     return resp
+
 
 def shutdown_server():
     """shutdown server"""
@@ -123,6 +136,9 @@ if __name__ == "__main__":
 
     # Initialise apps
     config.initialise_b()
+
+    # Initialize connection with SWIFT
+    swift.createConnection(config)
 
     # Configure Flask logger
     configure_logger(app.logger, app_logfile)
