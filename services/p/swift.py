@@ -1,6 +1,7 @@
 from keystoneauth1 import session
 from keystoneauth1.identity import v3
 from swiftclient.client import Connection
+import base64
 
 swift = None
 
@@ -26,7 +27,7 @@ def getContainers():
 
 def getImage(id):
 	picture = swift.get_object('Pictures', id)[1]
-	return picture
+	return base64.b64decode(picture)
 
 def isImageExist(id):
 	for data in swift.get_container('Pictures')[1]:
