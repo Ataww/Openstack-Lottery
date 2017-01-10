@@ -9,5 +9,4 @@ CREATE TABLE player_status (
   id INT PRIMARY KEY
 );
 
-
 GRANT SELECT, INSERT ON player_status TO s_user;
