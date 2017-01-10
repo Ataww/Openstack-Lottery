@@ -28,7 +28,8 @@ def get_image(id):
     if swift.isImageExist(id) :
         data = swift.getImage(id)
     else:
-        data = swift.getImage('unknown.png')
+        with open("image/unknown.png", "rb") as image_file:
+            data = image_file.read()
     
     response = Response(data, mimetype='image/png')
     add_headers(response)
