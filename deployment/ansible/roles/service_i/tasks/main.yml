@@ -5,7 +5,8 @@
   become: true
 
 - name: Configure service to launch i service
-  command: echo "services/i/i" > /etc/init.d/service.conf
+  shell: echo "services/i/i" > /etc/init.d/service.conf
+  become: true
 
 - name: Launch I service
   service:

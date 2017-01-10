@@ -5,7 +5,8 @@
   become: true
 
 - name: Configure service to launch s service
-  command: echo "services/s/s" > /etc/init.d/service.conf
+  shell: echo "services/s/s" > /etc/init.d/service.conf
+  become: true
 
 - name: Launch S service
   service:

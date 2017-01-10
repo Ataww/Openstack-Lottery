@@ -17,7 +17,8 @@
   become: true
 
 - name: Configure service to launch p service
-  command: echo "services/p/p" > /etc/init.d/service.conf
+  shell: echo "services/p/p" > /etc/init.d/service.conf
+  become: true
 
 - name: Launch P service
   service:

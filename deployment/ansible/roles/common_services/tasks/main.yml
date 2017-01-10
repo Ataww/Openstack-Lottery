@@ -28,9 +28,11 @@
 # Create linux service
 
 - name: Copy service script in /etc/init.d
-  command: cp /apps/Openstack-Lottery/deployment/service.sh /etc/init.d/sombrero_service
+  command: cp /apps/deployment/service.sh /etc/init.d/sombrero_service
   become: true
 
 - name: Set chmod on service script
-  command: chmod 755 /etc/init.d/sombrero_service
+  file:
+    path: /etc/init.d/sombrero_service
+    mode: 0755
   become: true

@@ -1,5 +1,6 @@
 - name: Configure service to launch w service
-  command: echo "services/w/w" > /etc/init.d/service.conf
+  shell: echo "services/w/w" > /etc/init.d/service.conf
+  become: true
 
 - name: Launch W service
   service:

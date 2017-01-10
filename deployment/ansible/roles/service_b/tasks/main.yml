@@ -17,7 +17,8 @@
   become: true
 
 - name: Configure service to launch b service
-  command: echo "services/b/b" > /etc/init.d/service.conf
+  shell: echo "services/b/b" > /etc/init.d/service.conf
+  become: true
 
 - name: Launch B service
   service:
