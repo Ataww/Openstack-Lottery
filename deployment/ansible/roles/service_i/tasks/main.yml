@@ -3,3 +3,12 @@
     name: pymysql
     executable: pip3
   become: true
+
+- name: Configure service to launch i service
+  command: echo "services/i/i" > /etc/init.d/service.conf
+
+- name: Launch I service
+  service:
+    name: sombrero_service
+    state: started
+  become: true

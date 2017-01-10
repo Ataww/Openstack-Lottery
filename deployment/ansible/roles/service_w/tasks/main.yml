@@ -1,0 +1,8 @@
+- name: Configure service to launch w service
+  command: echo "services/w/w" > /etc/init.d/service.conf
+
+- name: Launch W service
+  service:
+    name: sombrero_service
+    state: started
+  become: true

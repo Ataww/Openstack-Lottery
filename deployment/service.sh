@@ -1,7 +1,20 @@
 #!/bin/sh
-DAEMON="/apps/Openstack-Lottery/services/p/p.py"
+
+#Read config file
+while read line
+do
+      var=$line
+done < "service.conf"
+
+DAEMON="/apps/Openstack-Lottery/$var.py"
 DAEMONUSER="root"
-daemon_NAME="p.py"
+
+#Keep only executable name
+for i in $(echo $var | tr "/" "\n")
+do
+  var=$i
+done
+daemon_NAME="$var.py"
 
 PATH="/sbin:/bin:/usr/sbin:/usr/bin"
 

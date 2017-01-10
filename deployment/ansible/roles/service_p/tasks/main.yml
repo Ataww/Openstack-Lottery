@@ -15,3 +15,12 @@
     name: python-swiftclient
     executable: pip3
   become: true
+
+- name: Configure service to launch p service
+  command: echo "services/p/p" > /etc/init.d/service.conf
+
+- name: Launch P service
+  service:
+    name: sombrero_service
+    state: started
+  become: true
