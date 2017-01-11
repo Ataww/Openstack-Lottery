@@ -6,7 +6,7 @@ do
       var=$line
 done < "service.conf"
 
-DAEMON="/apps/Openstack-Lottery/$var.py"
+DAEMON="/apps/$var.py"
 DAEMONUSER="root"
 
 #Keep only executable name
