@@ -28,11 +28,15 @@
 # Create linux service
 
 - name: Copy service script in /etc/init.d
-  command: cp /apps/deployment/service.sh /etc/init.d/sombrero_service
+  command: cp /apps/deployment/service.sh /etc/init.d/sombrero
   become: true
 
 - name: Set chmod on service script
   file:
-    path: /etc/init.d/sombrero_service
+    path: /etc/init.d/sombrero
     mode: 0755
+  become: true
+
+- name: Reload daemons
+  command: systemctl daemon-reload
   become: true

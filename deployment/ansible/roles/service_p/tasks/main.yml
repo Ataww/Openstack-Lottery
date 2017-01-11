@@ -22,6 +22,6 @@
 
 - name: Launch P service
   service:
-    name: sombrero_service
+    name: sombrero
     state: started
   become: true
