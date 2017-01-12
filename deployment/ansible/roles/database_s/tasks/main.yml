@@ -1,0 +1,8 @@
+- name: Init db status
+  mysql_db:
+    state: import
+    name: all
+    login_user: root
+    login_password: root
+    target: /apps/external/dbstatus_init.sql
+  become: true
