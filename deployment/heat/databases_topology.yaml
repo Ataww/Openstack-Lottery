@@ -60,10 +60,10 @@ resources:
 
 #OUTPUTS
 outputs:
-  identification_private_ip:
+  identification_database_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [identification_instance, first_address] }
 
-  status_private_ip:
+  status_database_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [status_instance, first_address] }
