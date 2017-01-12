@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS db_status;
 DROP USER IF EXISTS 's_user';
 
-CREATE USER 's_user' IDENTIFIED BY 'ThePasswordOfSUser';
+CREATE USER 's_user'@'%' IDENTIFIED BY 'ThePasswordOfSUser';
 
 CREATE DATABASE db_status;
 USE db_status;
