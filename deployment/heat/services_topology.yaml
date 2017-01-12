@@ -20,6 +20,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   s_instance:
     type: OS::Nova::Server
@@ -30,6 +35,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   b_instance:
     type: OS::Nova::Server
@@ -40,6 +50,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   w_instance:
     type: OS::Nova::Server
@@ -50,6 +65,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   p_instance:
     type: OS::Nova::Server
@@ -60,6 +80,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   web_app_instance:
     type: OS::Nova::Server
@@ -70,6 +95,11 @@ resources:
       key_name: "default-rsa-key"
       networks:
        - network: "services_network"
+      user_data_format: SOFTWARE_CONFIG
+      user_data: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt-get install -y python
 
   # FLOATING IP ASSOCIATION
   wab_app_floating_association:
@@ -80,27 +110,27 @@ resources:
 
 #OUTPUTS
 outputs:
-  i_private_ip:
+  service_i_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [i_instance, first_address] }
 
-  s_private_ip:
+  service_s_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [s_instance, first_address] }
 
-  b_private_ip:
+  service_b_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [b_instance, first_address] }
 
-  w_private_ip:
+  service_w_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [w_instance, first_address] }
 
-  p_private_ip:
+  service_p_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [p_instance, first_address] }
 
-  webb_app_private_ip:
+  web_app_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [web_app_instance, first_address] }
 
