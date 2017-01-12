@@ -17,3 +17,11 @@
 - name: create consul config directory
   file: path=/etc/consul.d state=directory
   become: true
+
+- name: set configuration of new dns in resolv.conf
+  shell: printf "nameserver 127.0.0.1\nsearch node.consul" >> /etc/resolvconf/resolv.conf.d/head
+  become: true
+
+- name: reload resolvconf
+  command: resolvconf -u
+  besome: true
