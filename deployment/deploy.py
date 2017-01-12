@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-import subprocess
+# coding: utf-8
 
-# network puis router puis topology
+from subprocess import Popen,PIPE
+import json
+
+# The different kinds of stack we have to deploy
 network_stacks = [
     "databases_network",
     "services_network"
@@ -18,33 +21,94 @@ topology_stacks = [
     "services_topology"
 ]
 
+
+def interpret_json_for_inventory_file(json_string):
+
+    hosts_file_content = ""
+    json_object = json.loads(json_string)
+    services = {}
+
+    for key, value in json_object.iteritems():
+        if "private_ip" in key:
+            services[key[:key.index("private_ip") - 1]] = json.loads(value)["output_value"]
+
+    for service, ip in services.iteritems():
+        hosts_file_content += "\n["+service+"]\n"
+        hosts_file_content += ""+ip+"\n"
+
+    return hosts_file_content
+
+
+def interpret_json_for_etc_hosts_file(json_string):
+
+    hosts_file_content = ""
+    json_object = json.loads(json_string)
+    services = {}
+
+    for key, value in json_object.iteritems():
+        if "private_ip" in key:
+            services[key[:key.index("private_ip") - 1]] = json.loads(value)["output_value"]
+
+    for service, ip in services.iteritems():
+        hosts_file_content += "\n"+ip+" "+service
+
+    return hosts_file_content
+
+
 def main():
 
-    # Check if we can deploy
-    # TODO
+    # Initializing host file content
+    hosts_file = open("./default_ubuntu_hosts_file", 'r').read()
+    inventory_file = ""
 
-    # For each stack, deploy
+    # For each network stack, deploy
     for i in xrange(0, len(network_stacks)):
-        result = subprocess.run(["heat", ["stack-create", "--template-file", "./heat/"+network_stacks[i]]], stdout=subprocess.PIPE)
-        if result.return_code != 0:
+        print "./heat/"+network_stacks[i]+".yaml"
+        out = Popen(["openstack", "stack-create", "--template-file", "./heat/"+network_stacks[i]+".yaml", "--wait", ""+network_stacks[i]], stdout=PIPE, shell=True)
+        return_code = out.wait()
+        if return_code != 0:
             print("There was a problem while deploying "+network_stacks[i]+".yaml stack\n")
-            print("Command output : "+result.stdout)
+            print("Command output : "+str(return_code))
+            exit(-1)
 
-    # For each stack, deploy
+    # For each router stack, deploy
     for i in xrange(0, len(router_stacks)):
-        result = subprocess.run(["heat", ["stack-create", "--template-file", "./heat/"+router_stacks[i]]], stdout=subprocess.PIPE)
-        if result.return_code != 0:
+        out = Popen(["openstack", "stack-create", "--template-file", "./heat/" + router_stacks[i] + ".yaml", "--wait", ""+router_stacks[i]], stdout=PIPE, shell=True)
+        return_code = out.wait()
+        if return_code != 0:
             print("There was a problem while deploying "+router_stacks[i]+".yaml stack\n")
-            print("Command output : "+result.stdout)
+            print("Command output : "+str(return_code))
+            exit(-1)
 
-    # For each stack, deploy
+    # For each topology stack, deploy
     for i in xrange(0, len(topology_stacks)):
-        result = subprocess.run(["heat", ["stack-create", "--template-file", "./heat/"+topology_stacks[i]]], stdout=subprocess.PIPE)
-        if result.return_code != 0:
-            print("There was a problem while deploying "+network_stacks[i]+".yaml stack\n")
-            print("Command output : "+result.stdout)
+        out = Popen(["openstack", "stack-create", "--template-file", "./heat/" + topology_stacks[i] + ".yaml", "--wait", ""+topology_stacks[i]], stdout=PIPE, shell=True)
+        return_code = out.wait()
+        if return_code != 0:
+            print("There was a problem while deploying "+topology_stacks[i]+".yaml stack\n")
+            print("Command output : "+str(return_code))
+            exit(-1)
         else:
-            # Récupérer les IPs des machines dans les outputs
+            # Récupérer les IPs des machines dans les outputs de heat
+            out = Popen(["openstack", "stack", "output", "show","-f","json","--all", ""+topology_stacks[i]], stdout=PIPE, shell=True)
+            return_code = out.wait()
+            output = out.communicate()
+            hosts_file += interpret_json_for_etc_hosts_file(output)
+            inventory_file += interpret_json_for_inventory_file(output)
+
+    # Write /etc/hosts file
+    f1 = open("./ansible/roles/common/files/hosts", "rw")
+    f1.write(hosts_file)
+    f1.close()
+
+    # Write ansible playbook
+    f2 = open("./ansible/hosts")
+    f2.write(inventory_file)
+    f2.close()
+
+    # Launch ansible deployment
+    # out = Popen(["ansible-playbook"], stdout=PIPE, shell=True)
+
 
 if __name__ == "__main__":
     # execute only if run as a script
