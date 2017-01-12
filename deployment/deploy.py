@@ -61,6 +61,12 @@ def main():
     hosts_file = open("./default_ubuntu_hosts_file", 'r').read()
     inventory_file = ""
 
+    print("Sourcing openstack configuration file\n")
+    out = Popen(". ./project5-openrc.sh; env",shell=True)
+    if out.wait() != 0:
+        print("There was a problem while sourcing openstack configuration file")
+        exit(-1)
+
     # For each network stack, deploy
     for i in xrange(0, len(network_stacks)):
         print "Applying ./heat/"+network_stacks[i]+".yaml template"
