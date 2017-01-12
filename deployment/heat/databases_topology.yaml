@@ -27,7 +27,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "identification_database"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -37,7 +37,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "status_database"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
