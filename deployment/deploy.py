@@ -99,12 +99,12 @@ def main():
             inventory_file += interpret_json_for_inventory_file(output)
 
     # Write /etc/hosts file
-    f1 = open("./ansible/roles/common/files/hosts", "rw")
+    f1 = open("./ansible/roles/common/files/hosts", "w+")
     f1.write(hosts_file)
     f1.close()
 
     # Write ansible playbook
-    f2 = open("./ansible/hosts")
+    f2 = open("./ansible/hosts", "w+")
     f2.write(inventory_file)
     f2.close()
 
