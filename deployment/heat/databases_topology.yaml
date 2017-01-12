@@ -3,6 +3,25 @@ heat_template_version: 2015-04-30
 description: Databases topology
 
 resources:
+  #VOLUMES
+  status_volume:
+    type: OS::Cinder::Volume
+    properties:
+      availability_zone: "nova"
+      description: "Volume for the status databases"
+      name: "status_db_volume"
+      size: 1
+      volume_type: "nfs"
+
+  identification_volume:
+    type: OS::Cinder::Volume
+    properties:
+      availability_zone: "nova"
+      description: "Volume for the identification databases"
+      name: "identification_db_volume"
+      size: 1
+      volume_type: "nfs"
+
   #INSTANCE
   identification_instance:
     type: OS::Nova::Server
@@ -29,14 +48,14 @@ resources:
     type: OS::Cinder::VolumeAttachment
     properties:
       instance_uuid: { get_resource: identification_instance }
-      volume_id: "5baf6f68-ecd8-4f10-be0e-c46cbc66ae8a"
+      volume_id: { get_resource: identification_volume }
       mountpoint: "/dev/vdb"
 
   status_volume_attachment:
     type: OS::Cinder::VolumeAttachment
     properties:
       instance_uuid: { get_resource: status_instance }
-      volume_id: "af86f42d-2cf3-477a-8f6a-1e2089e33195"
+      volume_id: { get_resource: status_volume }
       mountpoint: "/dev/vdb"
 
 #OUTPUTS
