@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script type=text/javascript src="{{ url_for('static', filename='jquery-3.1.1.min.js') }}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>{{ render_option["title"] }}</title>
 </head>
 <body>
@@ -10,59 +11,9 @@
     <h1>Identification (Service I)</h1>
 </div>
 
-<script>
-    var url_i = "{{render_option["url_i"]}}"
-
-    $(document).ready(function () {
-        $.ajax({
-            url: url_i,
-            type: "GET",
-            isLocal: true,
-            success: function (json) {
-                if (jQuery.isEmptyObject(json)) {
-                    $("#ident").append("Aucun profil n'existe");
-                }
-                else {
-                    var lastname = json.lastname;
-                    var firstname = json.firstname;
-                    var authent = firstname + " " + lastname + " authentifié";
-                    $("#ident").append(authent);
-                }
-            },
-            error: function () {
-                $("#ident").append("Le service I ne répond pas");
-            }
-        });
-    })
-</script>
-
 <div id="status">
     <h1>Status (Service S)</h1>
 </div>
-
-<script>
-    var url_s = "{{render_option["url_s"]}}"
-
-    $(document).ready(function () {
-        $.ajax({
-            url: url_s,
-            type: "GET",
-            isLocal: true,
-            success: function (json) {
-                var status = json.status;
-                if (status === "open") {
-                    $("#ident").append("Le joueur n'a pas encore joué.");
-                } else {
-                    $("#ident").append("Le joueur a déjà joué.");
-                }
-
-            },
-            error: function () {
-                $("#status").append("Le service S ne répond pas");
-            }
-        });
-    })
-</script>
 
 <div id="button">
     <h1>Button (Service B)</h1>
@@ -70,54 +21,91 @@
 
 <input id="play-button" type="button" value="Launch Game" onclick="launch_game()">
 
-<script>
-    var url_b = "{{render_option["url_b"]}}"
-    var url_b_status = "{{render_option["url_b_status"]}}"
-
-    $(document).ready(function () {
-        $.ajax({
-            url: url_b_status,
-            type: "GET",
-            isLocal: true,
-            success: function () {
-                document.getElementById("play-button").style.display = "block";
-            },
-            error: function () {
-                document.getElementById("play-button").style.display = "none";
-                $("#button").append("Le service B ne répond pas");
-            }
-        });
-    })
-
-    function launch_game() {
-        $(document).ready(function () {
-            $.ajax({
-                url: url_b,
-                type: "GET",
-                isLocal: true,
-                success: function (json) {
-                    document.getElementById("play-button").style.display = "none";
-                },
-                error: function () {
-                }
-            });
-        })
-    }
-
-</script>
-
 <div id="picture">
     <h1>Image (Picture P)</h1>
     <img id="photo"/>
 </div>
 
-<script>
-    var url_p = "{{render_option["url_p"]}}"
 
-    $(document).ready(function () {
-        var img = document.querySelector("#photo");
-        img.src = url_p + "42";
-    })
+<script>
+    var url = "{{render_option["url"]}}"
+    var id = "{{render_option["id"]}}"
+
+
+    find_id()
+    test_status_id()
+
+
+
+    function find_id() {
+        $(document).ready(function () {
+            $.ajax({
+                url: url + "ident/" + id,
+                type: "GET",
+                isLocal: true,
+                success: function (json) {
+                    if (jQuery.isEmptyObject(json)) {
+                        $("#ident").append("Aucun profil n'existe");
+                    }
+                    else {
+                        var lastname = json.lastname;
+                        var firstname = json.firstname;
+                        var authent = firstname + " " + lastname + " authentifié";
+                        $("#ident").append(authent);
+                    }
+                },
+                error: function () {
+                    $("#ident").append("Le service I ne répond pas, impossible de participer à la lottery");
+                }
+            });
+        })
+    }
+
+    function test_status_id() {
+        $(document).ready(function () {
+            $.ajax({
+                url: url + "status/" + id,
+                type: "GET",
+                isLocal: true,
+                success: function (json) {
+                    var status = json.status;
+                    if (status === "open") {
+                        $("#status").append("Le joueur n'a pas encore joué.");
+                        $("#play-button").css("display", "block")
+                    } else {
+                        $("#status").append("Le joueur a déjà joué.");
+                        $("#play-button").css("display", "none")
+                        recover_image()
+                    }
+
+                },
+                error: function () {
+                    $("#status").append("Le service S ne répond pas");
+                    $("#play-button").css("display", "none")
+                }
+            });
+        })
+    }
+
+    function launch_game() {
+        $.ajax({
+            url: url + "play/" + id,
+            type: "GET",
+            isLocal: true,
+            success: function (json) {
+                $("#play-button").css("display", "none")
+                recover_image()
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function recover_image() {
+        var img = $("#photo")[0];
+        img.src = url + "image/" + id;
+    }
 </script>
 
 </body>

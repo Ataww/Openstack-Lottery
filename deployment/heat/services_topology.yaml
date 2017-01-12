@@ -5,31 +5,6 @@ description: Services topology
 resources:
 
   # FLOATING IP ADDRESS
-  i_floating_ip:
-    type: OS::Nova::FloatingIP
-    properties:
-      pool: external-network
-
-  s_floating_ip:
-    type: OS::Nova::FloatingIP
-    properties:
-      pool: external-network
-
-  b_floating_ip:
-    type: OS::Nova::FloatingIP
-    properties:
-      pool: external-network
-
-  w_floating_ip:
-    type: OS::Nova::FloatingIP
-    properties:
-      pool: external-network
-
-  p_floating_ip:
-    type: OS::Nova::FloatingIP
-    properties:
-      pool: external-network
-
   web_app_floating_ip:
     type: OS::Nova::FloatingIP
     properties:
@@ -97,36 +72,6 @@ resources:
        - network: "services_network"
 
   # FLOATING IP ASSOCIATION
-  i_floating_association:
-    type: OS::Nova::FloatingIPAssociation
-    properties:
-      floating_ip: { get_resource: i_floating_ip }
-      server_id: { get_resource: i_instance }
-
-  s_floating_association:
-    type: OS::Nova::FloatingIPAssociation
-    properties:
-      floating_ip: { get_resource: s_floating_ip }
-      server_id: { get_resource: s_instance }
-
-  b_floating_association:
-    type: OS::Nova::FloatingIPAssociation
-    properties:
-      floating_ip: { get_resource: b_floating_ip }
-      server_id: { get_resource: b_instance }
-
-  w_floating_association:
-    type: OS::Nova::FloatingIPAssociation
-    properties:
-      floating_ip: { get_resource: w_floating_ip }
-      server_id: { get_resource: w_instance }
-
-  p_floating_association:
-    type: OS::Nova::FloatingIPAssociation
-    properties:
-      floating_ip: { get_resource: p_floating_ip }
-      server_id: { get_resource: p_instance }
-
   wab_app_floating_association:
     type: OS::Nova::FloatingIPAssociation
     properties:
@@ -158,26 +103,6 @@ outputs:
   webb_app_private_ip:
     description: "Private IP address of the deployed compute instance"
     value: { get_attr: [web_app_instance, first_address] }
-
-  i_floating_ip:
-    description: "Floating IP address of the deployed compute instance"
-    value: { get_attr: [i_floating_ip, ip] }
-
-  s_floating_ip:
-    description: "Floating IP address of the deployed compute instance"
-    value: { get_attr: [s_floating_ip, ip] }
-
-  b_floating_ip:
-    description: "Floating IP address of the deployed compute instance"
-    value: { get_attr: [b_floating_ip, ip] }
-
-  w_floating_ip:
-    description: "Floating IP address of the deployed compute instance"
-    value: { get_attr: [w_floating_ip, ip] }
-
-  p_floating_ip:
-    description: "Floating IP address of the deployed compute instance"
-    value: { get_attr: [p_floating_ip, ip] }
 
   web_app_floating_ip:
     description: "Floating IP address of the deployed compute instance"

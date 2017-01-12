@@ -27,6 +27,8 @@ config.logger = app.logger
 def get_user(id):
 
     config.logger.info("Recieved request to find user with ID %d", id)
+    return_code = 200
+
     try:
         db = pymysql.connect(host=config.i.conf_file.get_i_db_host()
                              , port=int(config.i.conf_file.get_i_db_port())
@@ -36,24 +38,29 @@ def get_user(id):
         config.logger.info("Connection to database SUCCEED")
     except Exception as e:
         config.logger.critical("Error while connecting to database : " + e.args[1])
+        return_code = 500
         pass
 
-    cursor = db.cursor()
-    try:
-        cursor.execute('SELECT id_customer, firstname, lastname, email FROM ps_customer WHERE id_customer = ' + str(id))
-        config.logger.info("Request to databse SUCCEED")
-    except Exception as e:
-        config.logger.critical("Error while requesting database: " + e.args[1])
-        pass
+    if return_code == 200:
+        cursor = db.cursor()
+        try:
+            cursor.execute('SELECT id_customer, firstname, lastname, email FROM ps_customer WHERE id_customer = ' + str(id))
+            config.logger.info("Request to databse SUCCEED")
+        except Exception as e:
+            config.logger.critical("Error while requesting database: " + e.args[1])
+            return_code = 500
+            pass
 
     data = {}
-    for row in cursor:
-        data["id"] = row[0]
-        data["firstname"] = row[1]
-        data["lastname"] = row[2]
-        data["email"] = row[3]
+    if return_code == 200:
+        for row in cursor:
+            data["id"] = row[0]
+            data["firstname"] = row[1]
+            data["lastname"] = row[2]
+            data["email"] = row[3]
+
     resp = jsonify(data)
-    resp.status_code = 200
+    resp.status_code = return_code
     config.logger.info("*** End processing for user with id %s ***", id)
     add_headers(resp)
     return resp
