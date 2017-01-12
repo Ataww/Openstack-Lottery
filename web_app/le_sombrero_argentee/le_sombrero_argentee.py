@@ -44,6 +44,7 @@ def ident_user(id):
     service_i = config.site.conf_file.get_site_i_service()
     request_data = requests.get("http://" + host_i + ":" + port_i + "/" + service_i + "/" + str(id))
     response = Response(request_data)
+    response.status_code = request_data.status_code
     add_headers(response)
     return response
 
@@ -54,6 +55,7 @@ def image_user(id):
     service_p = config.site.conf_file.get_site_p_service()
     request_data = requests.get("http://" + host_p + ":" + port_p + "/" + service_p + "/" + str(id))
     response = Response(request_data)
+    response.status_code = request_data.status_code
     add_headers(response)
     return response
 
@@ -64,6 +66,7 @@ def status_user(id):
     service_s = config.site.conf_file.get_site_s_service()
     request_data = requests.get("http://" + host_s + ":" + port_s + "/" + service_s + "/" + str(id))
     response = Response(request_data)
+    response.status_code = request_data.status_code
     add_headers(response)
     return response
 
@@ -74,6 +77,7 @@ def play_button(id):
     service_b = config.site.conf_file.get_site_b_service()
     request_data = requests.get("http://" + host_b + ":" + port_b + "/" + service_b + "/" + str(id))
     response = Response(request_data)
+    response.status_code = request_data.status_code
     add_headers(response)
     return response
 

@@ -32,6 +32,9 @@ def api_check(sid):
     :type sid : int
     """
     config.logger.info("*** Checking user id %d ***", sid)
+
+    return_code = 200
+
     try:
         db = db_login()
         config.logger.info("Connection to database SUCCESSFUL")
@@ -39,19 +42,22 @@ def api_check(sid):
         cursor = db.cursor()
         cursor.execute("SELECT NULL FROM player_status WHERE id= %s", str(sid))
     except Exception as e:
-        config.logger.critical("Error while querying database : " + e.args[0])
+        config.logger.critical("Error while querying database : " + str(e.args[0]))
+        data = ""
+        return_code = 500
 
-    # fill the payload
-    data = {}
-    config.logger.info("%d matches for id %d", cursor.rowcount, sid)
-    if cursor.rowcount == 0:
-        data["status"] = "open"
-    else:
-        data["status"] = "played"
+    if (return_code != 500):
+        # fill the payload
+        data = {}
+        config.logger.info("%d matches for id %d", cursor.rowcount, sid)
+        if cursor.rowcount == 0:
+            data["status"] = "open"
+        else:
+            data["status"] = "played"
 
     # Send the status back
     resp = jsonify(data)
-    resp.status_code = 200
+    resp.status_code = return_code
     config.logger.info("*** End checking user id %d ***", sid)
     add_headers(resp)
     return resp
