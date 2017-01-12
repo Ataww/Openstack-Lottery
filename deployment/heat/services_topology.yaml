@@ -15,7 +15,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "i_service"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -25,7 +25,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "s_service"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -35,7 +35,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "b_service"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -45,7 +45,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "w_service"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -55,7 +55,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "p_service"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
@@ -65,7 +65,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "web_app"
-      image: "ubuntu1404_v2"
+      image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
       networks:
