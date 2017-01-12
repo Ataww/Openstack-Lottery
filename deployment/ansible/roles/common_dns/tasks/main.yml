@@ -19,9 +19,9 @@
   become: true
 
 - name: set configuration of new dns in resolv.conf
-  shell: printf "nameserver 127.0.0.1\nsearch node.consul" >> /etc/resolvconf/resolv.conf.d/head
+  shell: printf "nameserver 127.0.0.1\nsearch node.consul\n\n" >> /etc/resolvconf/resolv.conf.d/head
   become: true
 
 - name: reload resolvconf
   command: resolvconf -u
-  besome: true
+  become: true
