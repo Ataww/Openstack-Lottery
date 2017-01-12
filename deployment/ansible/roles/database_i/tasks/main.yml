@@ -5,9 +5,9 @@
     login_user: root
     login_password: root
     target: /apps/external/dbident_init.sql
-  become: true-
+  become: true
 
-name: Load ident dump
+-name: Load ident dump
   mysql_db:
     state: import
     name: all
