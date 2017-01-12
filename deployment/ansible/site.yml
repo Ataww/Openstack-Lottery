@@ -39,3 +39,9 @@
   - role: databases
   - role: common_services
   - role: database_s
+
+-hosts: database_i
+  roles:
+  - role: databases
+  - role: common_services
+  - role: database_i
