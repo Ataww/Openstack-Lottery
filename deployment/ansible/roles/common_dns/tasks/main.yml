@@ -11,7 +11,7 @@
   become: true
 
 - name: unzip consul
-  shell: unzip consul_0.7.2_linux_amd64.zip -d /usr/local/bin
+  shell: unzip /tmp/consul_0.7.2_linux_amd64.zip -d /usr/local/bin
   become: true
 
 - name: create consul config directory
