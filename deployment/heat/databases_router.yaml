@@ -6,5 +6,5 @@ resources:
   services_subnet_interface:
     type: OS::Neutron::RouterInterface
     properties:
-      router: "router"
+      router: "1bcb0fdc-9055-487b-b54f-1dd8979f2445"
       subnet: "databases_subnet"
