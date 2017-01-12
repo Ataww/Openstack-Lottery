@@ -1,0 +1,7 @@
+- name: launch client
+  command: consul agent -data-dir=/tmp/consul -node="{% for group in groups %}{% if group != 'all' and group != 'client_dns' %}{% for host in groups[group] %}{% if ansible_default_ipv4.address == hostvars[host]['ansible_default_ipv4']['address'] %}{{ group }}{% endif %}{% endfor %}{% endif %}{% endfor %}"  -bind="{{ ansible_default_ipv4.address }}" -config-dir=/etc/consul.d &
+  become: true
+
+- name: client join the cluster
+  shell: consul join {% for host in groups['serveur_dns'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endfor %}
+  become: true

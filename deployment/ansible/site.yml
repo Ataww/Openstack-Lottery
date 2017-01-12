@@ -39,3 +39,13 @@
   roles:
   - role: database
   - role: database_i
+
+- hosts: serveur_dns
+  roles:
+  - role: common_dns
+  - role: serveur_dns
+
+- hosts: client_dns
+  roles:
+  - role: common_dns
+  - role: client_dns
