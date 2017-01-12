@@ -75,3 +75,13 @@
     name: mysql
     state: started
   become: true
+
+- name: Create apps directory
+  file: path=/apps state=directory
+  become: true
+
+- name: Clone the repository
+  git:
+    repo: "{{ repository_openstack }}"
+    dest: /apps
+  become: true
