@@ -33,3 +33,9 @@
 - hosts: databases
   roles:
   - role: database
+
+-hosts: database_s
+  roles:
+  - role: databases
+  - role: common_services
+  - role: database_s
