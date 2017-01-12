@@ -30,12 +30,12 @@
   - role: common_services
   - role: service_w
 
--hosts: database_s
+- hosts: database_s
   roles:
   - role: database
   - role: database_s
 
--hosts: database_i
+- hosts: database_i
   roles:
   - role: database
   - role: database_i
