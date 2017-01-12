@@ -61,16 +61,10 @@ def main():
     hosts_file = open("./default_ubuntu_hosts_file", 'r').read()
     inventory_file = ""
 
-    print("Sourcing openstack configuration file\n")
-    out = Popen(". ./project5-openrc.sh; env",shell=True)
-    if out.wait() != 0:
-        print("There was a problem while sourcing openstack configuration file")
-        exit(-1)
-
     # For each network stack, deploy
     for i in xrange(0, len(network_stacks)):
         print "Applying ./heat/"+network_stacks[i]+".yaml template"
-        out = Popen("openstack stack-create --template-file ./heat/"+network_stacks[i]+".yaml --wait "+network_stacks[i], shell=True)
+        out = Popen(". ./project5-openrc.sh; openstack stack create -t ./heat/"+network_stacks[i]+".yaml --wait "+network_stacks[i], shell=True)
         return_code = out.wait()
         if return_code != 0:
             print("There was a problem while deploying "+network_stacks[i]+".yaml stack\n")
@@ -80,7 +74,7 @@ def main():
     # For each router stack, deploy
     for i in xrange(0, len(router_stacks)):
         print "Applying ./heat/" + router_stacks[i] + ".yaml template"
-        out = Popen("openstack stack-create --template-file ./heat/" +router_stacks[i] + ".yaml --wait "+router_stacks[i], shell=True)
+        out = Popen(". ./project5-openrc.sh; openstack stack create -t ./heat/" +router_stacks[i] + ".yaml --wait "+router_stacks[i], shell=True)
         return_code = out.wait()
         if return_code != 0:
             print("There was a problem while deploying "+router_stacks[i]+".yaml stack\n")
@@ -90,7 +84,7 @@ def main():
     # For each topology stack, deploy
     for i in xrange(0, len(topology_stacks)):
         print "Applying ./heat/" + topology_stacks[i] + ".yaml template"
-        out = Popen("openstack stack-create --template-file ./heat/" + topology_stacks[i] + ".yaml --wait "+topology_stacks[i], shell=True)
+        out = Popen(". ./project5-openrc.sh; openstack stack create -t ./heat/" + topology_stacks[i] + ".yaml --wait "+topology_stacks[i], shell=True)
         return_code = out.wait()
         if return_code != 0:
             print("There was a problem while deploying "+topology_stacks[i]+".yaml stack\n")
@@ -98,9 +92,9 @@ def main():
             exit(-1)
         else:
             # Récupérer les IPs des machines dans les outputs de heat
-            out = Popen("openstack stack output show -f json --all "+topology_stacks[i], shell=True)
+            out = Popen(". ./project5-openrc.sh; openstack stack output show -f json --all "+topology_stacks[i], stdout=PIPE, shell=True)
             return_code = out.wait()
-            output = out.communicate()
+            output = out.communicate()[0]
             hosts_file += interpret_json_for_etc_hosts_file(output)
             inventory_file += interpret_json_for_inventory_file(output)
 
