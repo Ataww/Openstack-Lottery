@@ -53,9 +53,8 @@ function checkForm() {
 
 function check_status_i() {
     $.ajax({
-        url: url + "ident/0",
+        url: "/ident/0",
         type: "GET",
-        isLocal: true,
         success: function () {
             success("#service-I")
             return true
@@ -74,9 +73,8 @@ function check_status_i() {
 function check_status_b() {
 
     $.ajax({
-        url: url + "status_b/",
+        url: "/status_b",
         type: "GET",
-        isLocal: true,
         success: function () {
             if (!status_w || !status_s) {
                 warning("#service-B");
@@ -98,9 +96,8 @@ function check_status_b() {
 
 function check_status_s() {
     $.ajax({
-        url: url + "status/0",
+        url: "/status/0",
         type: "GET",
-        isLocal: true,
         success: function () {
             $("#status_not_accessible").css("display", "none")
             success("#service-S");
@@ -124,9 +121,8 @@ function check_status_s() {
 
 function check_status_w() {
     $.ajax({
-        url: url + "status_w/0",
+        url: "/status_w/0",
         type: "GET",
-        isLocal: true,
         success: function () {
             status_w = true;
             success("#service-W");
@@ -146,9 +142,8 @@ function check_status_w() {
 
 function check_status_p() {
     $.ajax({
-        url: url + "image/0",
+        url: "/image/0",
         type: "GET",
-        isLocal: true,
         success: function () {
             success("#service-P");
             return true
@@ -166,9 +161,8 @@ function check_status_p() {
 
 function find_id(id) {
     $.ajax({
-        url: url + "ident/" + id,
+        url: "/ident/" + id,
         type: "GET",
-        isLocal: true,
         success: function () {
             return true;
         },
@@ -181,9 +175,8 @@ function find_id(id) {
 
 function recover_status() {
     $.ajax({
-        url: url + "status/" + current_id,
+        url: "/status/" + current_id,
         type: "GET",
-        isLocal: true,
         success: function (json) {
             var status = json.status;
             if (status === "open") {
@@ -211,9 +204,8 @@ function launch_game() {
     $("#play-button").css("display", "none")
     $("#play-button-progressbar").css("display", "block")
     $.ajax({
-        url: url + "play/" + current_id,
+        url: "/play/" + current_id,
         type: "GET",
-        isLocal: true,
         success: function () {
             $("#play-button-progressbar").css("display", "none")
             recover_image()
