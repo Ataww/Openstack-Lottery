@@ -47,6 +47,14 @@
     state: mounted
   become: true
 
+- name: Synchronize mysql data in new volume
+  synchronize:
+    src: /var/lib/mysql
+    dest: /data
+    rsync-opts:
+      - "-a"
+  become: true
+
 - name: Copy MySQL configuration
   template:
     src: mysqld.cnf.j2
