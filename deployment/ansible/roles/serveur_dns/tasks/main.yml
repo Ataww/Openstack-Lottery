@@ -1,3 +1,18 @@
-- name: launch server
-  shell: consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node="{% for group in groups %}{% if group != 'all' and group != 'serveur_dns' %}{% for host in groups[group] %}{% if ansible_default_ipv4.address == hostvars[host]['ansible_default_ipv4']['address'] %}{{ group }}{% endif %}{% endfor %}{% endif %}{% endfor %}" -bind="{{ ansible_default_ipv4.address }}"  -config-dir=/etc/consul.d -dns-port=53 &
+- name: Create service script
+  copy:
+    src: serveur_dns
+    dest: /etc/init.d/serveur_dns
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Reload daemons
+  command: systemctl daemon-reload
+  become: true
+
+- name: Launch dns server
+  service:
+    name: serveur_dns
+    state: started
   become: true
