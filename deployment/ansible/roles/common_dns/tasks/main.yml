@@ -17,7 +17,12 @@
   become: true
 
 - name: set configuration of new dns in resolv.conf
-  shell: printf "nameserver 127.0.0.1\nsearch node.consul\n\n" >> /etc/resolvconf/resolv.conf.d/head
+  copy:
+    src: head
+    dest: /etc/resolvconf/resolv.conf.d/head
+    owner: root
+    group: root
+    mode: 0644
   become: true
 
 - name: reload resolvconf
