@@ -6,16 +6,28 @@
     update_cache: yes
   become: true
 
-- name: Install package pip3
+- name: Install package pip
   apt:
-    name: python3-pip
+    name: python-pip
+    state: present
+  become: true
+
+- name: Install package python-dev
+  apt:
+    name: python-dev
+    state: present
+  become: true
+
+- name: Install package libmysqlclient-dev
+  apt:
+    name: libmysqlclient-dev
     state: present
   become: true
 
 - name: Install python package mysqldb
   pip:
-    name: mysqldb
-    executable: pip3
+    name: MySQL-python
+    executable: pip
   become: true
 
 - name: Set MySQL password
