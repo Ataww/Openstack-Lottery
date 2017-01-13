@@ -6,6 +6,18 @@
     update_cache: yes
   become: true
 
+- name: Install package pip3
+  apt:
+    name: python3-pip
+    state: present
+  become: true
+
+- name: Install python package flask
+  pip:
+    name: mysqldb
+    executable: pip3
+  become: true
+
 - name: Set MySQL password
   debconf: name='mysql-server' question='mysql-server/root_password' value='root' vtype='password'
   become: true
@@ -48,11 +60,7 @@
   become: true
 
 - name: Synchronize mysql data in new volume
-  synchronize:
-    src: /var/lib/mysql
-    dest: /data
-    rsync-opts:
-      - "-a"
+  shell: rsync -av /var/lib/mysql /data
   become: true
 
 - name: Copy MySQL configuration
