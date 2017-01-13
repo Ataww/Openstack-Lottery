@@ -71,6 +71,7 @@ def api_add(sid):
     :type sid : int
     """
     config.logger.info("*** Tagging user id %d as played ***", sid)
+    return_code = 200
 
     try:
         db = db_login()
@@ -80,12 +81,13 @@ def api_add(sid):
         cursor.execute("INSERT INTO player_status VALUES (%s)", str(sid))
         # db.commit()
     except Exception as e:
-        config.logger.critical("Error while updating database : " + e.args[0])
+        config.logger.critical("Error while updating database : " + str(e.args[0]))
+        return_code = 500
         pass
 
     # Acknowledge
     resp = make_response()
-    resp.status_code = 200
+    resp.status_code = return_code
     config.logger.info("*** User id %d successfully tagged as played ***", sid)
     add_headers(resp)
     return resp
