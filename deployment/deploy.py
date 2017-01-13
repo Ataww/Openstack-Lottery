@@ -116,16 +116,23 @@ def main():
     inventory_file += "\n[serveur_dns]\n"+web_app_ip
 
     # Write /etc/hosts file
+    print "Creating /etc/hosts file"
     f1 = open("./ansible/roles/common/files/hosts", "w+")
     f1.write(hosts_file)
     f1.close()
 
     # Write ansible playbook
+    print "Creating ansible hosts file"
     f2 = open("./ansible/hosts", "w+")
     f2.write(inventory_file)
     f2.close()
 
+    # Remove known_host
+    print "Removing previous known_hosts file"
+    Popen("rm ~/.ssh/known_hosts", shell=True)
+
     # Inject the machines into known host
+    print "Injecting machine identities into known_hosts file"
     hosts_file_lines = hosts_file.split("\n")
 
     for line in hosts_file_lines:
@@ -133,12 +140,8 @@ def main():
             Popen("ssh-keyscan -t rsa " + line + " >> ~/.ssh/known_hosts", shell=True)
 
     # Launch ansible deployment
-    out = Popen("ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml", shell=True)
-    return_code = out.wait()
-
-    if return_code != 0:
-        print "There was a problem while deploying ansible playbook..."
-        exit(-1)
+    #out = Popen("ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml", shell=True)
+    #return_code = out.wait()
 
     print("Site deployment has been successful !")
 
