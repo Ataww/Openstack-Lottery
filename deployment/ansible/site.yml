@@ -5,9 +5,16 @@
   roles:
   - role: common
 
+- hosts: serveur_dns
+  roles:
+  - role: common_dns
+  - role: serveur_dns
+
 - hosts: common_services
   roles:
-  - role: common_service
+  - role: common_services
+  - role: common_dns
+  - role: client_dns
 
 - hosts: service_i
   roles:
@@ -42,13 +49,3 @@
   roles:
   - role: database
   - role: database_i
-
-- hosts: serveur_dns
-  roles:
-  - role: common_dns
-  - role: serveur_dns
-
-- hosts: client_dns
-  roles:
-  - role: common_dns
-  - role: client_dns

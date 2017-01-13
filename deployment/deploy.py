@@ -21,6 +21,7 @@ topology_stacks = [
     "services_topology"
 ]
 
+web_app_ip = None
 
 def interpret_json_for_inventory_file(json_string):
 
@@ -32,9 +33,12 @@ def interpret_json_for_inventory_file(json_string):
     for key, value in json_object.iteritems():
         if "private_ip" in key:
             service_name = key[:key.index("private_ip") - 1]
-            services[service_name] = json.loads(value)["output_value"]
+            ip = json.loads(value)["output_value"]
+            services[service_name] = ip
             if "service" in service_name or "web_app" in service_name:
-                common_services += json.loads(value)["output_value"] +"\n"
+                common_services += ip +"\n"
+                if "web_app" in service_name:
+                    web_app_ip = ip
 
     for service, ip in services.iteritems():
         hosts_file_content += "\n["+service+"]\n"
@@ -106,9 +110,9 @@ def main():
             inventory_file += inventory_file_tmp
 
 
-
     # Add commons_services into ansible inventory file
     inventory_file += "\n"+common_services
+    inventory_file += "\n[serveur_dns]\n"+web_app_ip
 
     # Write /etc/hosts file
     f1 = open("./ansible/roles/common/files/hosts", "w+")
@@ -120,8 +124,15 @@ def main():
     f2.write(inventory_file)
     f2.close()
 
+    # Inject the machines into known host
+    hosts_file_lines = hosts_file.split("\n")
+
+    for line in hosts_file_lines:
+        if " " in line and line.count(".") == 3:
+            Popen("ssh-keyscan -t rsa " + line + " >> ~/.ssh/known_hosts", shell=True)
+
     # Launch ansible deployment
-    out = Popen(["ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml"], shell=True)
+    out = Popen("ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml", shell=True)
     return_code = out.wait()
 
     if return_code != 0:
