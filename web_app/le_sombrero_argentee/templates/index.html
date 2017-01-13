@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <script type=text/javascript src="{{ url_for('static', filename='jquery-3.1.1.min.js') }}"></script>
-    <script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/javascript.js') }}"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <title>{{ render_option["title"] }}</title>
 </head>
 <body>
