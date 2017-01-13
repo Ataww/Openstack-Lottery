@@ -1,5 +1,5 @@
-- name: Configure service to launch w service
-  shell: echo "services/web_app/le_sombrero_argentee/le_sombrero_argentee" > /etc/init.d/service.conf
+- name: Configure service to launch seb app
+  shell: echo "web_app/le_sombrero_argentee/le_sombrero_argentee" > /etc/init.d/service.conf
   become: true
 
 - name: Launch web_app

@@ -6,12 +6,42 @@
     update_cache: yes
   become: true
 
+- name: Install package pip
+  apt:
+    name: python-pip
+    state: present
+  become: true
+
+- name: Install package python-dev
+  apt:
+    name: python-dev
+    state: present
+  become: true
+
+- name: Install package libmysqlclient-dev
+  apt:
+    name: libmysqlclient-dev
+    state: present
+  become: true
+
+- name: Install python package mysqldb
+  pip:
+    name: MySQL-python
+    executable: pip
+  become: true
+
 - name: Set MySQL password
   debconf: name='mysql-server' question='mysql-server/root_password' value='root' vtype='password'
   become: true
 
 - name: Set MySQL password again
   debconf: name='mysql-server' question='mysql-server/root_password_again' value='root' vtype='password'
+  become: true
+
+- name: Format attached volume
+  filesystem:
+    fstype: ext4
+    dev: /dev/vdb
   become: true
 
 - name: Install MySQL Server
@@ -39,6 +69,10 @@
     src: "{{ database_volume_device }}"
     fstype: ext4
     state: mounted
+  become: true
+
+- name: Synchronize mysql data in new volume
+  shell: rsync -av /var/lib/mysql /data
   become: true
 
 - name: Copy MySQL configuration
