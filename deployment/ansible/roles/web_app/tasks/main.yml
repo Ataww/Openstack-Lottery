@@ -1,0 +1,9 @@
+- name: Configure service to launch w service
+  shell: echo "services/web_app/le_sombrero_argentee/le_sombrero_argentee" > /etc/init.d/service.conf
+  become: true
+
+- name: Launch web_app
+  service:
+    name: sombrero
+    state: started
+  become: true
