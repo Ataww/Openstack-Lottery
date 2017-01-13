@@ -7,7 +7,7 @@
 
 - hosts: common_services
   roles:
-  - role: common_service
+  - role: common_services
 
 - hosts: service_i
   roles:
