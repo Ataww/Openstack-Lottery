@@ -1,5 +1,4 @@
 var input = "";
-var url = "http://localhost:8090/"
 var status_s = false
 var status_w = false
 var current_id = 0
@@ -27,9 +26,9 @@ $(document).ready(function () {
     }
 
     check_status_i();
-    check_status_s();
     check_status_w();
     check_status_p();
+    check_status_s();
     check_status_b();
 });
 
@@ -38,13 +37,17 @@ function checkForm() {
     val = $(input).val();
 
     if (isNumber(val)) {
-        isConnect = find_id(val)
-        if (isConnect) {
-            current_id = val;
-            window.location.href = url + val;
-        } else {
-            window.location.href = url + "?error_auth";
-        }
+        $.ajax({
+            url: "/ident/" + val,
+            type: "GET",
+            success: function () {
+                current_id = val;
+                window.location.href = val;
+            },
+            error: function () {
+                window.location.href = "?error_auth";
+            }
+        });
     } else {
         window.location.href = url + "?error";
     }
@@ -57,7 +60,6 @@ function check_status_i() {
         type: "GET",
         success: function () {
             success("#service-I")
-            return true
         },
         error: function (jqXHR) {
             if ("404" == jqXHR.statusCode().status) {
@@ -67,7 +69,6 @@ function check_status_i() {
             }
         }
     });
-    return false
 }
 
 function check_status_b() {
@@ -80,7 +81,6 @@ function check_status_b() {
                 warning("#service-B");
             } else {
                 success("#service-B")
-                return true
             }
         },
         error: function (jqXHR) {
@@ -91,7 +91,6 @@ function check_status_b() {
             }
         }
     });
-    return false
 }
 
 function check_status_s() {
@@ -102,7 +101,6 @@ function check_status_s() {
             $("#status_not_accessible").css("display", "none")
             success("#service-S");
             status_s = true;
-            return true
         },
         error: function (jqXHR) {
             status_s = false;
@@ -112,11 +110,9 @@ function check_status_s() {
             } else {
                 warning("#service-S");
                 $("#status_not_accessible").css("display", "block")
-
             }
         }
     });
-    return false
 }
 
 function check_status_w() {
@@ -126,7 +122,6 @@ function check_status_w() {
         success: function () {
             status_w = true;
             success("#service-W");
-            return true
         },
         error: function (jqXHR) {
             status_w = false;
@@ -137,7 +132,6 @@ function check_status_w() {
             }
         }
     });
-    return false
 }
 
 function check_status_p() {
@@ -146,7 +140,6 @@ function check_status_p() {
         type: "GET",
         success: function () {
             success("#service-P");
-            return true
         },
         error: function (jqXHR) {
             if ("404" == jqXHR.statusCode().status) {
@@ -156,37 +149,39 @@ function check_status_p() {
             }
         }
     });
-    return false
 }
 
-function find_id(id) {
-    $.ajax({
-        url: "/ident/" + id,
-        type: "GET",
-        success: function () {
-            return true;
-        },
-        error: function () {
-            return false;
-        }
-    });
-
-}
-
-function recover_status() {
+window.recover_status = function () {
     $.ajax({
         url: "/status/" + current_id,
         type: "GET",
+        dataType: 'json',
         success: function (json) {
             var status = json.status;
-            if (status === "open") {
+            if (status == "open") {
                 $("#status_not_play").css("display", "block")
                 $("#status_play").css("display", "none")
-                if (check_status_b()) {
-                    $("#play-button").css("display", "block")
-                } else {
-                    $("#play-button").css("display", "none")
-                }
+                $.ajax({
+                    url: "/status_b",
+                    type: "GET",
+                    success: function () {
+                        if (!status_w || !status_s) {
+                            warning("#service-B");
+                            $("#play-button").css("display", "none")
+                        } else {
+                            success("#service-B")
+                            $("#play-button").css("display", "block")
+                        }
+                    },
+                    error: function (jqXHR) {
+                        if ("404" == jqXHR.statusCode().status) {
+                            error("#service-B");
+                        } else {
+                            warning("#service-B");
+                            $("#play-button").css("display", "none")
+                        }
+                    }
+                });
             } else {
                 $("#status_not_play").css("display", "none")
                 $("#status_play").css("display", "block")
@@ -208,11 +203,15 @@ function launch_game() {
         type: "GET",
         success: function () {
             $("#play-button-progressbar").css("display", "none")
+            $("#status_not_play").css("display", "none")
+            $("#status_play").css("display", "block")
             recover_image()
+
         },
         error: function () {
             $("#play-button-progressbar").css("display", "none")
             $("#service_b_error").css("display", "block")
+            $("#status_not_play").css("display", "none")
             warning("#service-B")
         }
     });
@@ -220,16 +219,26 @@ function launch_game() {
 }
 
 function recover_image() {
-    if (check_status_p()) {
-        $("#picture").css("display", "block")
-        $("#picture_error").css("display", "none")
-        var img = $("#photo")[0];
-        img.src = url + "image/" + current_id;
-    } else {
-        $("#picture").css("display", "none")
-        $("#picture_error").css("display", "block")
-
-    }
+    $.ajax({
+        url: "/image/0",
+        type: "GET",
+        success: function () {
+            success("#service-P");
+            $("#picture").css("display", "block")
+            $("#picture_error").css("display", "none")
+            var img = $("#photo")[0];
+            img.src = "/image/" + current_id;
+        },
+        error: function (jqXHR) {
+            if ("404" == jqXHR.statusCode().status) {
+                error("#service-P");
+            } else {
+                warning("#service-P");
+            }
+            $("#picture").css("display", "none")
+            $("#picture_error").css("display", "block")
+        }
+    });
 }
 
 function setValue(url_render, id) {

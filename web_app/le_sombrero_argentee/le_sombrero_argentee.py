@@ -48,6 +48,8 @@ def connexions(id):
 
 @app.route('/ident/<int:id>')
 def ident_user(id):
+    config.logger.info("Call Service ident of I with ID %d", id)
+
     host_i = config.site.conf_file.get_site_i_host()
     port_i = config.site.conf_file.get_site_i_port()
     service_i = config.site.conf_file.get_site_i_service()
@@ -57,6 +59,8 @@ def ident_user(id):
 
 @app.route('/image/<int:id>')
 def image_user(id):
+    config.logger.info("Call Service image of P with ID %d", id)
+
     host_p = config.site.conf_file.get_site_p_host()
     port_p = config.site.conf_file.get_site_p_port()
     service_p = config.site.conf_file.get_site_p_service()
@@ -66,6 +70,8 @@ def image_user(id):
 
 @app.route('/status/<int:id>')
 def status_user(id):
+    config.logger.info("Call Service status of S with ID %d", id)
+
     host_s = config.site.conf_file.get_site_s_host()
     port_s = config.site.conf_file.get_site_s_port()
     service_s = config.site.conf_file.get_site_s_service()
@@ -75,6 +81,8 @@ def status_user(id):
 
 @app.route('/play/<int:id>')
 def play_button(id):
+    config.logger.info("Call Service play of B with ID %d", id)
+
     host_b = config.site.conf_file.get_site_b_host()
     port_b = config.site.conf_file.get_site_b_port()
     service_b = config.site.conf_file.get_site_b_service()
@@ -84,14 +92,18 @@ def play_button(id):
 
 @app.route('/status_b')
 def status_b():
+    config.logger.info("Call Service B for check his status ")
+
     host_b = config.site.conf_file.get_site_b_host()
     port_b = config.site.conf_file.get_site_b_port()
     url = "http://" + host_b + ":" + port_b + "/"
     return launch_requete(url)
 
 
-@app.route('/status_w')
-def status_w():
+@app.route('/status_w/<int:id>')
+def status_w(id):
+    config.logger.info("Call Service play of W with ID %d", id)
+
     host_w = config.site.conf_file.get_site_w_host()
     port_w = config.site.conf_file.get_site_w_port()
     service_w = config.site.conf_file.get_site_w_service()
