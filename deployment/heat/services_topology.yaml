@@ -14,7 +14,7 @@ resources:
   i_instance:
     type: OS::Nova::Server
     properties:
-      name: "i_service"
+      name: "service_i"
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
@@ -29,7 +29,7 @@ resources:
   s_instance:
     type: OS::Nova::Server
     properties:
-      name: "s_service"
+      name: "service_s"
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
@@ -44,7 +44,7 @@ resources:
   b_instance:
     type: OS::Nova::Server
     properties:
-      name: "b_service"
+      name: "service_b"
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
@@ -59,7 +59,7 @@ resources:
   w_instance:
     type: OS::Nova::Server
     properties:
-      name: "w_service"
+      name: "service_w"
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
@@ -74,7 +74,7 @@ resources:
   p_instance:
     type: OS::Nova::Server
     properties:
-      name: "p_service"
+      name: "service_p"
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
