@@ -252,7 +252,7 @@ function setValue(url_render, id) {
 
 
 function disconnect() {
-    window.location.href = url;
+    window.location.href = "/";
 }
 
 function isNumber(n) {
