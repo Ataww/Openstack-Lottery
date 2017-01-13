@@ -38,6 +38,7 @@ def interpret_json_for_inventory_file(json_string):
             if "service" in service_name or "web_app" in service_name:
                 common_services += ip +"\n"
                 if "web_app" in service_name:
+                    global web_app_ip
                     web_app_ip = ip
 
     for service, ip in services.iteritems():
