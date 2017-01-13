@@ -29,6 +29,10 @@
   roles:
   - role: service_w
 
+- hosts: web_app
+  roles:
+  - role: web_app
+
 - hosts: status_database
   roles:
   - role: database
