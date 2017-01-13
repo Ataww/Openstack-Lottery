@@ -5,11 +5,14 @@
     validate_certs: no
   become: true
 
+- name: Install unzip
+  apt:
+    name: unzip
+    state: present
+  become: true
+
 - name: unzip consul
-  unarchive:
-    src: /tmp/consul_0.7.2_linux_amd64.zip
-    dest: /usr/local/bin
-    remote_src: True
+  shell: unzip -o /tmp/consul_0.7.2_linux_amd64.zip -d /usr/local/bin
   become: true
 
 - name: create consul config directory
