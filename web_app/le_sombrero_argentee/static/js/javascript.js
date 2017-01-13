@@ -168,6 +168,8 @@ window.recover_status = function () {
                         if (!status_w || !status_s) {
                             warning("#service-B");
                             $("#play-button").css("display", "none")
+                            $("#service_b_error").css("display", "block")
+                            $("#status_not_play").css("display", "none")
                         } else {
                             success("#service-B")
                             $("#play-button").css("display", "block")
@@ -180,6 +182,8 @@ window.recover_status = function () {
                             warning("#service-B");
                             $("#play-button").css("display", "none")
                         }
+                        $("#service_b_error").css("display", "block")
+                        $("#status_not_play").css("display", "none")
                     }
                 });
             } else {
