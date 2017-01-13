@@ -27,10 +27,14 @@ def interpret_json_for_inventory_file(json_string):
     hosts_file_content = ""
     json_object = json.loads(json_string)
     services = {}
+    common_services = ""
 
     for key, value in json_object.iteritems():
         if "private_ip" in key:
-            services[key[:key.index("private_ip") - 1]] = json.loads(value)["output_value"]
+            service_name = key[:key.index("private_ip") - 1]
+            services[service_name] = json.loads(value)["output_value"]
+            if "service" in service_name:
+                common_services += json.loads(value)["output_value"] +"\n"
 
     for service, ip in services.iteritems():
         hosts_file_content += "\n["+service+"]\n"
@@ -60,6 +64,7 @@ def main():
     # Initializing host file content
     hosts_file = open("./default_ubuntu_hosts_file", 'r').read()
     inventory_file = ""
+    common_services = "[common_services]\n"
 
     # For each network stack, deploy
     for i in xrange(0, len(network_stacks)):
@@ -96,7 +101,14 @@ def main():
             return_code = out.wait()
             output = out.communicate()[0]
             hosts_file += interpret_json_for_etc_hosts_file(output)
-            inventory_file += interpret_json_for_inventory_file(output)
+            common_services_tmp,inventory_file_tmp = interpret_json_for_inventory_file(output)
+            common_services += common_services_tmp
+            inventory_file += inventory_file_tmp
+
+
+
+    # Add commons_services into ansible inventory file
+    inventory_file += "\n"+common_services
 
     # Write /etc/hosts file
     f1 = open("./ansible/roles/common/files/hosts", "w+")
@@ -109,7 +121,14 @@ def main():
     f2.close()
 
     # Launch ansible deployment
-    # out = Popen(["ansible-playbook"], stdout=PIPE, shell=True)
+    out = Popen(["ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml"], shell=True)
+    return_code = out.wait()
+
+    if return_code != 0:
+        print "There was a problem while deploying ansible playbook..."
+        exit(-1)
+
+    print("Site deployment has been successful !")
 
 
 if __name__ == "__main__":

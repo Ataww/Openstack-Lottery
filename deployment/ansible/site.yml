@@ -5,29 +5,28 @@
   roles:
   - role: common
 
+- hosts: common_services
+  roles:
+  - role: common_service
+
 - hosts: service_i
   roles:
-  - role: common_services
   - role: service_i
 
 - hosts: service_b
   roles:
-  - role: common_services
   - role: service_b
 
 - hosts: service_p
   roles:
-  - role: common_services
   - role: service_p
 
 - hosts: service_s
   roles:
-  - role: common_services
   - role: service_s
 
 - hosts: service_w
   roles:
-  - role: common_services
   - role: service_w
 
 - hosts: status_database
