@@ -49,7 +49,7 @@ function checkForm() {
             }
         });
     } else {
-        window.location.href = url + "?error";
+        window.location.href = "/?error";
     }
 
 }
@@ -244,12 +244,6 @@ function recover_image() {
         }
     });
 }
-
-function setValue(url_render, id) {
-    url = url_render
-    current_id = id;
-}
-
 
 function disconnect() {
     window.location.href = "/";

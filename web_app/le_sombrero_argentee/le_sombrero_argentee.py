@@ -39,7 +39,6 @@ def connexions(id):
 
     render_option = {}
     render_option["title"] = config.site.NAME
-    render_option["url"] = "http://localhost:" + config.site.conf_file.get_site_port() + "/"
     render_option["id"] = str(id)
 
     config.logger.info("Launch render on template lottery.html")
