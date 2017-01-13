@@ -2,16 +2,14 @@
   get_url:
     url: https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip
     dest: /tmp
-  become: true
-
-- name: Install UNZIP package
-  apt:
-    name: unzip
-    state: present
+    validate_certs: no
   become: true
 
 - name: unzip consul
-  shell: unzip /tmp/consul_0.7.2_linux_amd64.zip -d /usr/local/bin
+  unarchive:
+    src: /tmp/consul_0.7.2_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: True
   become: true
 
 - name: create consul config directory
