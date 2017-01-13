@@ -33,14 +33,14 @@ def interpret_json_for_inventory_file(json_string):
         if "private_ip" in key:
             service_name = key[:key.index("private_ip") - 1]
             services[service_name] = json.loads(value)["output_value"]
-            if "service" in service_name:
+            if "service" in service_name or "web_app" in service_name:
                 common_services += json.loads(value)["output_value"] +"\n"
 
     for service, ip in services.iteritems():
         hosts_file_content += "\n["+service+"]\n"
         hosts_file_content += ""+ip+"\n"
 
-    return hosts_file_content
+    return common_services, hosts_file_content
 
 
 def interpret_json_for_etc_hosts_file(json_string):
