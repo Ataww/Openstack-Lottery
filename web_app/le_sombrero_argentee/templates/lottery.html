@@ -12,6 +12,7 @@
 </head>
 <body>
 
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -25,44 +26,40 @@
                 <span id="service-B" class="label label-danger">Service B</span>
                 <span id="service-W" class="label label-danger">Service W</span>
                 <span style="margin-right: 33%" id="service-P" class="label label-danger">Service P</span>
-                <button style="visibility: hidden" type="button" onclick="disconnect()" class="btn btn-danger">Deconnexion</button>
+                <button type="button" onclick="disconnect()" class="btn btn-danger">Deconnexion</button>
             </div>
         </div>
     </div>
 </nav>
 
-<div id="error" style="display:none; text-align: center" class="bg-danger">Veuillez rentrer un nombre comme
-    identifiant
+
+<div id="status_play" style="display:none; text-align: center" class="bg-info">Vous avez déjà participé à la
+    OpenStack-Lottery, voici votre dernier lot.
+</div>
+<div id="status_not_play" style="display:none; text-align: center" class="bg-info">Vous n'avez pas encore participé,
+    venez tenter votre chance !!!
+</div>
+<div id="status_not_accessible" style="display:none; text-align: center" class="bg-danger">Nous ne sommes pas en mesures
+    d'accéder à votre status, veuillez réassayer une prochaine fois merci.
+</div>
+<div id="picture_error" style="display:none; text-align: center" class="bg-danger">Nous somme dans l'incapacité de vous montrer votre lot. Revenez une prochaine fois pour voir ou revoir votre suprise.
+</div>
+<div id="service_b_error" style="display:none; text-align: center" class="bg-danger">Nous n'avons pas put vous faire particper au a la grande OpenStack-Lottery. Revenez essayer une prochaine fois.
 </div>
 
-<div id="error_auth" style="display:none; text-align: center" class="bg-danger">Impossible de vous connecter à cause du service d'authentification qui n'est pas accessible.
+<div align="center">
+    <h1> </h1>
+    <input style="display: none;" class="btn btn-primary" id="play-button" type="button" value="Lancer le tirage au sort" onclick="launch_game()">
+    <div id="play-button-progressbar" style="display: none; width: 30%" class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+        </div>
+    </div>
 </div>
 
-
-<form class="form-horizontal">
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-2">
-            <label for="inputIdentifiant" class="control-label">Identifiant de connexions : </label>
-            <br>
-        </div>
-        <div id="inputIdentifiant" class="col-sm-offset-5 col-sm-2">
-            <input type="text" class="form-control" id="identifiant" placeholder="Identifiant de connexions">
-        </div>
-
-        <div id="inputIdentifiantError" style="display:none" class="col-sm-offset-5 col-sm-2 has-error has-feedback">
-            <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status"
-                   placeholder="Identifiant de connexions">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-            <span id="inputError2Status" class="sr-only">(error)</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-2">
-            <button type="button" onclick="checkForm()" class="btn btn-default">Connexions</button>
-        </div>
-    </div>
-</form>
+<div style="display: none" align="center" id="picture">
+    <h1 id="picture-title">Voici votre lot :</h1>
+    <img id="photo"/>
+</div>
 
 <footer class="footer">
     <div class="container-fluid">
@@ -85,8 +82,9 @@
 
 <script>
     var url = "{{render_option["url"]}}"
-    var id = 0
-    setValue(url,id)
+    var id = "{{render_option["id"]}}"
+    setValue(url, id)
+    recover_status()
 </script>
 
 </body>

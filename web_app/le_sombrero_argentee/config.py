@@ -42,6 +42,7 @@ class siteConfiguration(object):
 
     def get_site_i_service(self):
         return self.config.get("i", "service")
+
     def get_site_p_host(self):
         return self.config.get("p", "host")
 
@@ -50,6 +51,7 @@ class siteConfiguration(object):
 
     def get_site_p_service(self):
         return self.config.get("p", "service")
+
     def get_site_s_host(self):
         return self.config.get("s", "host")
 
@@ -58,6 +60,7 @@ class siteConfiguration(object):
 
     def get_site_s_service(self):
         return self.config.get("s", "service")
+
     def get_site_b_host(self):
         return self.config.get("b", "host")
 
@@ -66,3 +69,12 @@ class siteConfiguration(object):
 
     def get_site_b_service(self):
         return self.config.get("b", "service")
+
+    def get_site_w_host(self):
+        return self.config.get("w", "host")
+
+    def get_site_w_port(self):
+        return self.config.get("w", "port")
+
+    def get_site_w_service(self):
+        return self.config.get("w", "service")

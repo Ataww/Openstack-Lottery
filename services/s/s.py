@@ -34,6 +34,7 @@ def api_check(sid):
     config.logger.info("*** Checking user id %d ***", sid)
 
     return_code = 200
+    data = ""
 
     try:
         db = db_login()
@@ -43,7 +44,6 @@ def api_check(sid):
         cursor.execute("SELECT NULL FROM player_status WHERE id= %s", str(sid))
     except Exception as e:
         config.logger.critical("Error while querying database : " + str(e.args[0]))
-        data = ""
         return_code = 500
 
     if (return_code != 500):
