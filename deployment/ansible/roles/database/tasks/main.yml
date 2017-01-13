@@ -12,7 +12,7 @@
     state: present
   become: true
 
-- name: Install python package flask
+- name: Install python package mysqldb
   pip:
     name: mysqldb
     executable: pip3
