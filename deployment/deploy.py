@@ -21,7 +21,8 @@ topology_stacks = [
     "services_topology"
 ]
 
-web_app_ip = None
+serveur_dns = None
+clients_dns = ""
 
 def interpret_json_for_inventory_file(json_string):
 
@@ -37,9 +38,14 @@ def interpret_json_for_inventory_file(json_string):
             services[service_name] = ip
             if "service" in service_name or "web_app" in service_name:
                 common_services += ip +"\n"
-                if "web_app" in service_name:
-                    global web_app_ip
-                    web_app_ip = ip
+            
+            if "web_app" in service_name:
+                global serveur_dns
+                serveur_dns = ip
+
+            if "service" in service_name or "database" in service_name:
+                global clients_dns
+                clients_dns += "\n" + ip
 
     for service, ip in services.iteritems():
         hosts_file_content += "\n["+service+"]\n"
@@ -113,7 +119,8 @@ def main():
 
     # Add commons_services into ansible inventory file
     inventory_file += "\n"+common_services
-    inventory_file += "\n[serveur_dns]\n"+web_app_ip
+    inventory_file += "\n[serveur_dns]\n"+serveur_dns
+    inventory_file += "\n[client_dns]\n"+clients_dns
 
     # Write /etc/hosts file
     print "Creating /etc/hosts file"
