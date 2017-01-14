@@ -249,6 +249,10 @@ function disconnect() {
     window.location.href = "/";
 }
 
+function setCurrentID(id) {
+    current_id = id;
+}
+
 function isNumber(n) {
     return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
 }
