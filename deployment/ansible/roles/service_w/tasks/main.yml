@@ -2,6 +2,12 @@
   shell: echo "services/w/w" > /etc/init.d/service.conf
   become: true
 
+- name: Install imagemagick
+  apt:
+    name: imagemagick
+    state: present
+  become: true
+
 - name: Launch W service
   service:
     name: sombrero
