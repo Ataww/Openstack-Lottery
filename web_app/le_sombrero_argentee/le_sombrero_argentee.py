@@ -123,9 +123,9 @@ def status_s():
 def status_p():
     config.logger.info("Call Service P for check his status ")
 
-    host_p = config.site.conf_file.get_site_w_host()
-    port_p = config.site.conf_file.get_site_w_port()
-    service_status = config.site.conf_file.get_site_w_service_status()
+    host_p = config.site.conf_file.get_site_p_host()
+    port_p = config.site.conf_file.get_site_p_port()
+    service_status = config.site.conf_file.get_site_p_service_status()
     url = "http://" + host_p + ":" + port_p + "/" +service_status
     return launch_requete(url)
 
@@ -138,18 +138,6 @@ def status_i():
     service_status = config.site.conf_file.get_site_i_service_status()
     url = "http://" + host_i + ":" + port_i + "/" +service_status
     return launch_requete(url)
-
-
-@app.route('/status_w/<int:id>')
-def status_w(id):
-    config.logger.info("Call Service play of W with ID %d", id)
-
-    host_w = config.site.conf_file.get_site_w_host()
-    port_w = config.site.conf_file.get_site_w_port()
-    service_w = config.site.conf_file.get_site_w_service()
-    url = "http://" + host_w + ":" + port_w + "/" + service_w + "/" + str(id)
-    return launch_requete(url)
-
 
 def launch_requete(url):
     try:
