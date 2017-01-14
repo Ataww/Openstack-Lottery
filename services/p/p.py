@@ -13,6 +13,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from flask import Response
+from flask import make_response
 import config
 import swift
 
@@ -23,17 +24,34 @@ app.debug = True
 # Affect app logger to a global variable so logger can be used elsewhere.
 config.logger = app.logger
 
+
 @app.route("/image/<id>")
 def get_image(id):
-    if swift.isImageExist(id) :
+    if swift.isImageExist(id):
         data = swift.getImage(id)
     else:
         with open("image/unknown.png", "rb") as image_file:
             data = image_file.read()
-    
+
     response = Response(data, mimetype='image/png')
     add_headers(response)
     return response
+
+
+@app.route("/status", methods=["GET"])
+def status_server():
+    """Status server"""
+    config.logger.info("Check status of this server")
+    return_code = 500
+
+    if (swift.getContainers()):
+        return_code = 200
+
+    resp = make_response()
+    resp.status_code = return_code
+    add_headers(resp)
+    return resp
+
 
 def configure_logger(logger, logfile):
     """Configure logger"""

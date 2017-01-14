@@ -16,6 +16,7 @@ import sys
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import make_response
 import config
 
 # Initialise Flask
@@ -77,6 +78,14 @@ def api_play(id):
     add_headers(resp)
     return resp
 
+@app.route("/status", methods=["GET"])
+def status_server():
+    """Status server"""
+    config.logger.info("Check status of this server")
+    resp = make_response()
+    resp.status_code = 200
+    add_headers(resp)
+    return resp
 
 @app.route("/shutdown", methods=["POST"])
 def shutdown():

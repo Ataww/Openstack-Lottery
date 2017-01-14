@@ -11,6 +11,7 @@ import sys
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import make_response
 import requests
 from logging.handlers import RotatingFileHandler
 import swift
@@ -66,6 +67,19 @@ def getValueJson(keyResearch, data):
             return value
     return ""
 
+@app.route("/status", methods=["GET"])
+def status_server():
+    """Status server"""
+    config.logger.info("Check status of this server")
+    return_code = 500
+
+    if(swift.getContainers()):
+        return_code = 200
+
+    resp = make_response()
+    resp.status_code = return_code
+    add_headers(resp)
+    return resp
 
 @app.route("/shutdown", methods=["POST"])
 def shutdown():

@@ -56,7 +56,7 @@ function checkForm() {
 
 function check_status_i() {
     $.ajax({
-        url: "/ident/0",
+        url: "/status_i",
         type: "GET",
         success: function () {
             success("#service-I")
@@ -95,7 +95,7 @@ function check_status_b() {
 
 function check_status_s() {
     $.ajax({
-        url: "/status/0",
+        url: "/status_s",
         type: "GET",
         success: function () {
             $("#status_not_accessible").css("display", "none")
@@ -117,7 +117,7 @@ function check_status_s() {
 
 function check_status_w() {
     $.ajax({
-        url: "/status_w/0",
+        url: "/status_w",
         type: "GET",
         success: function () {
             status_w = true;
@@ -136,7 +136,7 @@ function check_status_w() {
 
 function check_status_p() {
     $.ajax({
-        url: "/image/0",
+        url: "/status_p",
         type: "GET",
         success: function () {
             success("#service-P");

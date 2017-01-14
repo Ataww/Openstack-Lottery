@@ -23,8 +23,12 @@ def createConnection(config):
 
 
 def getContainers():
-    resp_headers, container = swift.get_container('Pictures')
-    print(container)
+    try:
+        resp_headers, container = swift.get_container('Pictures')
+        print(container)
+        return True
+    except:
+        return False
 
 
 def putImage(id, image):

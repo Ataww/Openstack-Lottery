@@ -95,7 +95,48 @@ def status_b():
 
     host_b = config.site.conf_file.get_site_b_host()
     port_b = config.site.conf_file.get_site_b_port()
-    url = "http://" + host_b + ":" + port_b + "/"
+    service_status = config.site.conf_file.get_site_b_service_status()
+    url = "http://" + host_b + ":" + port_b + "/" +service_status
+    return launch_requete(url)
+
+@app.route('/status_w')
+def status_w():
+    config.logger.info("Call Service W for check his status ")
+
+    host_w = config.site.conf_file.get_site_w_host()
+    port_w = config.site.conf_file.get_site_w_port()
+    service_status = config.site.conf_file.get_site_w_service_status()
+    url = "http://" + host_w + ":" + port_w + "/" +service_status
+    return launch_requete(url)
+
+@app.route('/status_s')
+def status_s():
+    config.logger.info("Call Service S for check his status ")
+
+    host_s = config.site.conf_file.get_site_s_host()
+    port_s = config.site.conf_file.get_site_s_port()
+    service_status = config.site.conf_file.get_site_s_service_status()
+    url = "http://" + host_s + ":" + port_s + "/" +service_status
+    return launch_requete(url)
+
+@app.route('/status_p')
+def status_p():
+    config.logger.info("Call Service P for check his status ")
+
+    host_p = config.site.conf_file.get_site_w_host()
+    port_p = config.site.conf_file.get_site_w_port()
+    service_status = config.site.conf_file.get_site_w_service_status()
+    url = "http://" + host_p + ":" + port_p + "/" +service_status
+    return launch_requete(url)
+
+@app.route('/status_i')
+def status_i():
+    config.logger.info("Call Service I for check his status ")
+
+    host_i = config.site.conf_file.get_site_i_host()
+    port_i = config.site.conf_file.get_site_i_port()
+    service_status = config.site.conf_file.get_site_i_service_status()
+    url = "http://" + host_i + ":" + port_i + "/" +service_status
     return launch_requete(url)
 
 

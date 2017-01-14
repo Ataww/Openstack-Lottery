@@ -13,6 +13,7 @@ import os
 import sys
 from flask import Flask
 from flask import jsonify
+from flask import make_response
 import config
 import pymysql
 
@@ -60,8 +61,35 @@ def get_user(id):
             data["email"] = row[3]
 
     resp = jsonify(data)
-    resp.status_code = return_code
+    resp.status_code = 200
     config.logger.info("*** End processing for user with id %s ***", id)
+    add_headers(resp)
+    return resp
+
+
+@app.route("/status", methods=["GET"])
+def status_server():
+    """Status server"""
+    config.logger.info("Check status of this server")
+    return_code = 200
+
+    try:
+        # check connection with database
+        db = pymysql.connect(host=config.i.conf_file.get_i_db_host()
+                             , port=int(config.i.conf_file.get_i_db_port())
+                             , user=config.i.conf_file.get_i_db_user()
+                             , password=config.i.conf_file.get_i_db_pwd()
+                             , database=config.i.conf_file.get_i_db_name())
+        # Check the presence of the table
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM ps_customer")
+    except Exception as e:
+        config.logger.critical("Error while updating database : " + str(e.args[0]))
+        return_code = 500
+        pass
+
+    resp = make_response()
+    resp.status_code = return_code
     add_headers(resp)
     return resp
 
