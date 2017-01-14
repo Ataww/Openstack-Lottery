@@ -41,16 +41,16 @@
 <form class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-2">
-            <label for="inputIdentifiant" class="control-label">Identifiant de connexions : </label>
+            <label for="inputIdentifiant" class="control-label">Identifiant de connexion : </label>
             <br>
         </div>
         <div id="inputIdentifiant" class="col-sm-offset-5 col-sm-2">
-            <input type="text" class="form-control" id="identifiant" placeholder="Identifiant de connexions">
+            <input type="text" class="form-control" id="identifiant" placeholder="Identifiant de connexion">
         </div>
 
         <div id="inputIdentifiantError" style="display:none" class="col-sm-offset-5 col-sm-2 has-error has-feedback">
             <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status"
-                   placeholder="Identifiant de connexions">
+                   placeholder="Identifiant de connexion">
             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             <span id="inputError2Status" class="sr-only">(error)</span>
         </div>
@@ -58,7 +58,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-2">
-            <button type="button" onclick="checkForm()" class="btn btn-default">Connexions</button>
+            <button type="button" onclick="checkForm()" class="btn btn-default">Connexion</button>
         </div>
     </div>
 </form>
@@ -85,7 +85,6 @@
 <script>
     var url = "{{render_option["url"]}}"
     var id = 0
-    setValue(url,id)
 </script>
 
 </body>
