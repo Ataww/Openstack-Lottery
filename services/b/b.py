@@ -36,6 +36,7 @@ def api_play(id):
     host_w = config.b.conf_file.get_w_host()
     port_w = config.b.conf_file.get_w_port()
     service_w = config.b.conf_file.get_w_service()
+    send_winning_message(id)
 
     # Call Web service w
     request_data = requests.get("http://" + host_w + ":" + port_w + "/" + service_w + "/" + str(id))
