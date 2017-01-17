@@ -14,16 +14,24 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#">OpenStack-Lottery</a>
         </div>
 
-        <div class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse">
             <div class="navbar-form" align="right">
                 <span id="service-I" class="label label-danger">Service I</span>
                 <span id="service-S" class="label label-danger">Service S</span>
                 <span id="service-B" class="label label-danger">Service B</span>
                 <span id="service-W" class="label label-danger">Service W</span>
-                <span style="margin-right: 33%" id="service-P" class="label label-danger">Service P</span>
+                <span style="margin-right: 16%" id="service-P" class="label label-danger">Service P</span>
                 <button style="visibility: hidden" type="button" onclick="disconnect()" class="btn btn-danger">Deconnexion</button>
             </div>
         </div>
@@ -34,34 +42,38 @@
     identifiant
 </div>
 
-<div id="error_auth" style="display:none; text-align: center" class="bg-danger">Impossible de vous connecter à cause du service d'authentification qui n'est pas accessible.
+<div id="error_auth" style="display:none; text-align: center" class="bg-danger">Impossible de vous connecter à cause du
+    service d'authentification qui n'est pas accessible.
 </div>
 
+<div class="row">
+    <form class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-xl-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 form-horizontal">
+        <div class="form-group">
+            <div class="col-xl-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
+                <label for="inputIdentifiant" class="control-label">Identifiant de connexion : </label>
+                <br>
+            </div>
+            <div id="inputIdentifiant"
+                 class="col-xl-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
+                <input type="text" class="form-control" id="identifiant" placeholder="Identifiant de connexion">
+            </div>
 
-<form class="form-horizontal">
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-2">
-            <label for="inputIdentifiant" class="control-label">Identifiant de connexion : </label>
-            <br>
-        </div>
-        <div id="inputIdentifiant" class="col-sm-offset-5 col-sm-2">
-            <input type="text" class="form-control" id="identifiant" placeholder="Identifiant de connexion">
+            <div id="inputIdentifiantError" style="display:none"
+                 class="col-sm-offset-5 col-sm-2col-xl-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 has-error has-feedback">
+                <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status"
+                       placeholder="Identifiant de connexion">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span id="inputError2Status" class="sr-only">(error)</span>
+            </div>
         </div>
 
-        <div id="inputIdentifiantError" style="display:none" class="col-sm-offset-5 col-sm-2 has-error has-feedback">
-            <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status"
-                   placeholder="Identifiant de connexion">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-            <span id="inputError2Status" class="sr-only">(error)</span>
+        <div class="form-group">
+            <div class="col-xl-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
+                <button type="button" onclick="checkForm()" class="btn btn-default">Connexion</button>
+            </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-2">
-            <button type="button" onclick="checkForm()" class="btn btn-default">Connexion</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <footer class="footer">
     <div class="container-fluid">

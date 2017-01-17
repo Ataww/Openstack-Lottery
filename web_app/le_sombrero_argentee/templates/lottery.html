@@ -16,16 +16,24 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#">OpenStack-Lottery</a>
         </div>
 
-        <div class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse">
             <div class="navbar-form" align="right">
                 <span id="service-I" class="label label-danger">Service I</span>
                 <span id="service-S" class="label label-danger">Service S</span>
                 <span id="service-B" class="label label-danger">Service B</span>
                 <span id="service-W" class="label label-danger">Service W</span>
-                <span style="margin-right: 33%" id="service-P" class="label label-danger">Service P</span>
+                <span style="margin-right: 16%" id="service-P" class="label label-danger">Service P</span>
                 <button type="button" onclick="disconnect()" class="btn btn-danger">Deconnexion</button>
             </div>
         </div>
@@ -42,23 +50,28 @@
 <div id="status_not_accessible" style="display:none; text-align: center" class="bg-danger">Nous ne sommes pas en mesures
     d'accéder à votre status, veuillez réessayer une prochaine fois merci.
 </div>
-<div id="picture_error" style="display:none; text-align: center" class="bg-danger">Nous somme dans l'incapacité de vous montrer votre lot. Revenez une prochaine fois pour voir ou revoir votre surprise.
+<div id="picture_error" style="display:none; text-align: center" class="bg-danger">Nous somme dans l'incapacité de vous
+    montrer votre lot. Revenez une prochaine fois pour voir ou revoir votre surprise.
 </div>
-<div id="service_b_error" style="display:none; text-align: center" class="bg-danger">Nous n'avons pas put vous faire participer à la grande OpenStack-Lottery. Revenez essayer une prochaine fois.
+<div id="service_b_error" style="display:none; text-align: center" class="bg-danger">Nous n'avons pas put vous faire
+    participer à la grande OpenStack-Lottery. Revenez essayer une prochaine fois.
 </div>
 
 <div align="center">
-    <h1> </h1>
-    <input style="display: none;" class="btn btn-primary" id="play-button" type="button" value="Lancer le tirage au sort" onclick="launch_game()">
+    <h1></h1>
+    <input style="display: none;" class="btn btn-primary" id="play-button" type="button"
+           value="Lancer le tirage au sort" onclick="launch_game()">
     <div id="play-button-progressbar" style="display: none; width: 30%" class="progress">
         <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
         </div>
     </div>
 </div>
 
-<div style="display: none" align="center" id="picture">
-    <h1 id="picture-title">Voici votre lot :</h1>
-    <img height="30%" width="30%" id="photo"/>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3" style="display: none" id="picture">
+        <h1 align="center" id="picture-title">Voici votre lot :</h1>
+        <img height="30%" width="100%" id="photo"/>
+    </div>
 </div>
 
 <footer class="footer">
