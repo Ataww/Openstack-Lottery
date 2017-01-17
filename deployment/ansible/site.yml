@@ -39,12 +39,14 @@
   roles:
   - role: web_app
 
-- hosts: status_database
+- hosts: common_databases
   roles:
   - role: database
+
+- hosts: status_database
+  roles:
   - role: database_s
 
 - hosts: identification_database
   roles:
-  - role: database
   - role: database_i
