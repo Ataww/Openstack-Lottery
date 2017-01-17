@@ -159,7 +159,7 @@ def main():
 
     for line in hosts_file_lines:
         if " " in line and line.count(".") == 3:
-            Popen("ssh-keyscan -t rsa " + line + " >> ~/.ssh/known_hosts", shell=True)
+            Popen("ssh-keyscan -t rsa " + line[:line.index(" ")] + " >> ~/.ssh/known_hosts", shell=True)
 
     # Launch ansible deployment
     #out = Popen("ansible-playbook -i ./ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ./ansible/site.yml", shell=True)
