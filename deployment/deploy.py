@@ -73,7 +73,6 @@ def interpret_json_for_etc_hosts_file(json_string):
 def main():
 
     # Initializing host file content
-    hosts_file = open("./default_ubuntu_hosts_file", 'r').read()
     inventory_file = ""
     common_services = "[common_services]\n"
 
