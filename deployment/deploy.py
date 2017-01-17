@@ -122,12 +122,6 @@ def main():
     inventory_file += "\n[serveur_dns]\n"+serveur_dns
     inventory_file += "\n[client_dns]\n"+clients_dns
 
-    # Write /etc/hosts file
-    print "Creating /etc/hosts file"
-    f1 = open("./ansible/roles/common/files/hosts", "w+")
-    f1.write(hosts_file)
-    f1.close()
-
     # Write ansible playbook
     print "Creating ansible hosts file"
     f2 = open("./ansible/hosts", "w+")
