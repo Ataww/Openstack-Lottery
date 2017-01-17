@@ -75,14 +75,11 @@ def status_server():
 
     try:
         # check connection with database
-        db = pymysql.connect(host=config.i.conf_file.get_i_db_host()
+        pymysql.connect(host=config.i.conf_file.get_i_db_host()
                              , port=int(config.i.conf_file.get_i_db_port())
                              , user=config.i.conf_file.get_i_db_user()
                              , password=config.i.conf_file.get_i_db_pwd()
                              , database=config.i.conf_file.get_i_db_name())
-        # Check the presence of the table
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM ps_customer")
     except Exception as e:
         config.logger.critical("Error while updating database : " + str(e.args[0]))
         return_code = 500
