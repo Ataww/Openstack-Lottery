@@ -170,7 +170,7 @@ def main():
 
     # Ansible
     print("Wait for launching ansible.")
-    time.sleep(60)
+    time.sleep(180)
     print("Launch ansible deployment")
     out = Popen("ansible-playbook -i ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ansible/site.yml", shell=True)
     return_code = out.wait()
