@@ -82,6 +82,7 @@ def interpret_json_for_etc_hosts_file(json_string):
 def main():
 
     # Initializing host file content
+    hosts_file = ""
     inventory_file = ""
     common_services = "[common_services]\n"
 
