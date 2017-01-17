@@ -15,6 +15,10 @@ router_stacks = [
     "services_router"
 ]
 
+security_stacks = [
+    "security"
+]
+
 topology_stacks = [
     "databases_topology",
     "objects_topology",
@@ -100,6 +104,17 @@ def main():
         if return_code != 0:
             print("There was a problem while deploying "+router_stacks[i]+".yaml stack\n")
             print("Command output : "+str(return_code))
+            exit(-1)
+
+    # For each security stack, deploy
+    for i in xrange(0, len(security_stacks)):
+        print
+        "Applying ./heat/" + security_stacks[i] + ".yaml template"
+        out = Popen(". ./project5-openrc.sh; openstack stack create -t ./heat/" + security_stacks[i] + ".yaml --wait " +security_stacks[i], shell=True)
+        return_code = out.wait()
+        if return_code != 0:
+            print("There was a problem while deploying " + security_stacks[i] + ".yaml stack\n")
+            print("Command output : " + str(return_code))
             exit(-1)
 
     # For each topology stack, deploy
