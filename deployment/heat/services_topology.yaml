@@ -18,6 +18,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG
@@ -33,6 +34,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG
@@ -48,6 +50,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG
@@ -63,6 +66,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG
@@ -78,6 +82,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG
@@ -93,6 +98,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
       user_data_format: SOFTWARE_CONFIG

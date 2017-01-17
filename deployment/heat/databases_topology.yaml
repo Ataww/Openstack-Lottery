@@ -27,6 +27,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "identification_database"
+      security_groups: ["default", "custom_group"]
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
@@ -46,6 +47,7 @@ resources:
       image: "ubuntu1604"
       flavor: "m1.small"
       key_name: "default-rsa-key"
+      security_groups: ["default", "custom_group"]
       networks:
        - network: "databases_network"
       user_data_format: SOFTWARE_CONFIG

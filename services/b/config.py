@@ -75,3 +75,12 @@ class bConfiguration(object):
 
     def get_w_service(self):
         return self.config.get("w", "service")
+
+    def get_mail_domain(self):
+        return self.config.get("mail","domain")
+
+    def get_mail_key(self):
+        return self.config.get("mail","key")
+
+    def get_mail_recipient(self):
+        return self.config.get("mail","recipient")

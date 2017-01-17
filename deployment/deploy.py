@@ -15,6 +15,10 @@ router_stacks = [
     "services_router"
 ]
 
+security_stacks = [
+    "security"
+]
+
 topology_stacks = [
     "databases_topology",
     "objects_topology",
@@ -23,6 +27,7 @@ topology_stacks = [
 
 serveur_dns = None
 clients_dns = ""
+databases = ""
 
 def interpret_json_for_inventory_file(json_string):
 
@@ -46,6 +51,10 @@ def interpret_json_for_inventory_file(json_string):
             if "service" in service_name or "database" in service_name:
                 global clients_dns
                 clients_dns += "\n" + ip
+
+            if "database" in service_name:
+                global databases
+                databases += "\n" + ip
 
     for service, ip in services.iteritems():
         hosts_file_content += "\n["+service+"]\n"
@@ -96,6 +105,17 @@ def main():
             print("Command output : "+str(return_code))
             exit(-1)
 
+    # For each security stack, deploy
+    for i in xrange(0, len(security_stacks)):
+        print
+        "Applying ./heat/" + security_stacks[i] + ".yaml template"
+        out = Popen(". ./project5-openrc.sh; openstack stack create -t ./heat/" + security_stacks[i] + ".yaml --wait " +security_stacks[i], shell=True)
+        return_code = out.wait()
+        if return_code != 0:
+            print("There was a problem while deploying " + security_stacks[i] + ".yaml stack\n")
+            print("Command output : " + str(return_code))
+            exit(-1)
+
     # For each topology stack, deploy
     for i in xrange(0, len(topology_stacks)):
         print "Applying ./heat/" + topology_stacks[i] + ".yaml template"
@@ -120,6 +140,7 @@ def main():
     inventory_file += "\n"+common_services
     inventory_file += "\n[serveur_dns]\n"+serveur_dns
     inventory_file += "\n[client_dns]\n"+clients_dns
+    inventory_file += "\n[common_databases]\n"+databases
 
     # Write ansible playbook
     print "Creating ansible hosts file"

@@ -102,10 +102,7 @@ def status_server():
 
     try:
         # check connection with database
-        db = db_login()
-        # Check the presence of the table
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM player_status")
+        db_login()
     except Exception as e:
         config.logger.critical("Error while updating database : " + str(e.args[0]))
         return_code = 500
