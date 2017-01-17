@@ -52,6 +52,9 @@ def api_play(id):
         request_data = requests.put("http://" + host_s + ":" + port_s + "/" + service_s + "/" + str(id))
         if request_data.status_code == requests.codes.ok:
             config.logger.error("*** impossible de mettre à jour le status ***", id)
+        # Send the email to the winner.
+        send_winning_message(id)
+
     else:
         resp = jsonify("")
         resp.status_code = request_data.status_code
@@ -67,19 +70,21 @@ def getValueJson(keyResearch, data):
             return value
     return ""
 
+
 @app.route("/status", methods=["GET"])
 def status_server():
     """Status server"""
     config.logger.info("Check status of this server")
     return_code = 500
 
-    if(swift.getContainers()):
+    if (swift.getContainers()):
         return_code = 200
 
     resp = make_response()
     resp.status_code = return_code
     add_headers(resp)
     return resp
+
 
 @app.route("/shutdown", methods=["POST"])
 def shutdown():
@@ -104,6 +109,23 @@ def api_root():
 
     add_headers(resp)
     return resp
+
+
+def send_winning_message(id):
+    confFile = config.b.conf_file
+    domain = confFile.get_mail_domain()
+    apiKey = confFile.get_mail_key()
+    recipient = confFile.get_mail_recipient()
+    return requests.post(
+        "https://api.mailgun.net/v3/"+domain+"/messages",
+        auth=("api", apiKey),
+        data={"from": "Le Sombrero Argenté <postmaster@"+domain+">",
+              "to": "nath <"+recipient+">",
+              "subject": "A new Winner!",
+              "text": "Hello,  "
+                      "A new player won a price!  "
+                      "you can review the price with the id "+str(id)+"  "
+                      "Regards.  "})
 
 
 def shutdown_server():
