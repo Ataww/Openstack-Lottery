@@ -3,6 +3,7 @@
 
 from subprocess import Popen,PIPE
 import json
+import time
 
 # The different kinds of stack we have to deploy
 network_stacks = [
@@ -166,6 +167,17 @@ def main():
     #return_code = out.wait()
 
     print("Site deployment has been successful !")
+
+    # Ansible
+    print("Wait for launching ansible.")
+    time.sleep(60)
+    print("Launch ansible deployment")
+    out = Popen("ansible-playbook -i ansible/hosts --private-key ~/.ssh/bastion -u ubuntu  ansible/site.yml", shell=True)
+    return_code = out.wait()
+    if return_code != 0:
+        print("There was a problem while deploying with ansible\n")
+        print("Command output : " + str(return_code))
+        exit(-1)
 
 
 if __name__ == "__main__":
