@@ -61,7 +61,7 @@ def get_user(id):
             data["email"] = row[3]
 
     resp = jsonify(data)
-    resp.status_code = 200
+    resp.status_code = return_code
     config.logger.info("*** End processing for user with id %s ***", id)
     add_headers(resp)
     return resp
