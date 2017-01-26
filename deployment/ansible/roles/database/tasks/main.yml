@@ -118,4 +118,5 @@
   git:
     repo: "{{ repository_openstack }}"
     dest: /apps
+    version: openInfra
   become: true

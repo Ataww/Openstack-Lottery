@@ -30,7 +30,7 @@ resources:
       security_groups: ["default", "custom_group"]
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       networks:
        - network: "databases_network"
       user_data_format: SOFTWARE_CONFIG
@@ -46,7 +46,7 @@ resources:
       name: "status_database"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "databases_network"

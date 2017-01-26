@@ -23,6 +23,7 @@
   git:
     repo: "{{ repository_openstack }}"
     dest: /apps
+    version: openInfra
   become: true
 
 # Create linux service

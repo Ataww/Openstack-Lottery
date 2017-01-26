@@ -17,7 +17,7 @@ resources:
       name: "service_i"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
@@ -33,7 +33,7 @@ resources:
       name: "service_s"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
@@ -49,7 +49,7 @@ resources:
       name: "service_b"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
@@ -65,7 +65,7 @@ resources:
       name: "service_w"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
@@ -81,7 +81,7 @@ resources:
       name: "service_p"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
@@ -97,7 +97,7 @@ resources:
       name: "web_app"
       image: "ubuntu1604"
       flavor: "m1.small"
-      key_name: "default-rsa-key"
+      key_name: "bastion_key"
       security_groups: ["default", "custom_group"]
       networks:
        - network: "services_network"
